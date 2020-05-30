@@ -30,7 +30,7 @@ struct User {
         lastName = snapshotValue["last_name"] as! String
         firstName = snapshotValue["first_name"] as! String
         picture = Picture(snapshot: snapshot)
-        eventNames = snapshotValue["eventNames"] as! [String]
+        eventNames = snapshotValue["eventNames"] as? [String] ?? []
     }
     
     func convertToDictionary() -> [AnyHashable : Any] {

@@ -15,7 +15,7 @@ class TabBar: UITabBarController {
         modalTransitionStyle = .coverVertical
         modalPresentationStyle = .fullScreen
         let viewController = ViewController()
-        let chatVC = ChatVC()
+        let chatVC = ChannelsViewController()
         let mapVC = MapVC()
         viewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person") , selectedImage: UIImage(systemName: "person.fill"))
         mapVC.tabBarItem = UITabBarItem(title: "Карта", image: UIImage(systemName: "map") , selectedImage: UIImage(systemName: "map.fill"))

@@ -415,7 +415,7 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   Mapbox-iOS-SDK: 051d78eb8beb4bd0601212a18ea3ba8608bae32f
   MapboxCoreNavigation: cf6ec1b4d3920f9178f4b3557750327f76acdb1a
-  MapboxDirections.swift: 6be6f756176b2c16f308093cc4724fa82ce33b12
+  MapboxDirections.swift: 1c6df988c24b753888ebd9976d7c98632501a413
   MapboxMobileEvents: f6c21b2e59066c5c7093585de7c15adae3b63da0
   MapboxNavigation: 45fa17b2dfd023b0b8ea78990d872b7e50c3d78f
   MapboxNavigationNative: 11dc22140f4698d3f26989f2b6379dc81ef0d4c1
@@ -428,6 +428,6 @@ SPEC CHECKSUMS:
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
   Turf: c6bdf62d6a70c647874f295dd1cf4eefc0c3e9e6
 
-PODFILE CHECKSUM: 71c362fe5d43850d8bff9416797ab23b74ec4185
+PODFILE CHECKSUM: 9db669d4841f6ade9ea2cc7b79d4832c0893f850
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.8.4

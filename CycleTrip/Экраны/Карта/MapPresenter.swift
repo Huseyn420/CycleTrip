@@ -25,7 +25,6 @@ final class MapPresenter {
     var userEventAnnotations: [MGLPointAnnotation]!
     var coordinates = [CLLocationCoordinate2D]()
     var currentRoute: Route!
-//    var user: User!
     let uid = Auth.auth().currentUser!.uid
     let ref = Database.database().reference()
     func calculateRoute(coordinates: [CLLocationCoordinate2D],
@@ -95,6 +94,13 @@ final class MapPresenter {
         }
     }
     
+//    func createEvent(name: String, date: Date) {
+//        createdEvent = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
+//        guard let key = ref.child("events").childByAutoId().key else { return }
+//        ref.child("events/\(key)").setValue(createdEvent.convertToDictionary())
+//        eventNames.append(key)
+//        ref.child("users").child(uid).child("eventNames").setValue(eventNames)
+//    }
     func createEvent(name: String, date: Date) {
         createdEvent = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
         guard let key = ref.child("events").childByAutoId().key else { return }

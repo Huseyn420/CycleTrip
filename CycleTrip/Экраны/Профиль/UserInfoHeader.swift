@@ -19,7 +19,7 @@ class UserInfoHeader: UIView {
         let iv = UIImageView()
         Database.database().reference().child("users").child(uid).observe(.value, with: { (DataSnapshot) in
             let user = User(snapshot: DataSnapshot)
-            let a = user.imageURL
+            let a = user.picture.url
 
         if a != nil {
             iv.image = UIImage(named: "avatar")

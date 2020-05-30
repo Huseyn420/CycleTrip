@@ -1,0 +1,36 @@
+//
+//  Person.swift
+//  Cycle Trip
+//
+//  Created by Гусейн Агаев on 24.04.2020.
+//  Copyright © 2020 Прогеры. All rights reserved.
+//
+
+import Foundation
+import Firebase
+
+struct User {
+    let email: String
+    let lastName: String
+    let firstName: String
+    let picture: Picture
+    
+    init(email: String, lastName: String, firstName: String, picture: Picture) {
+        self.email = email
+        self.lastName = lastName
+        self.firstName = firstName
+        self.picture = picture
+    }
+
+    init(snapshot: DataSnapshot) {
+        let snapshotValue = snapshot.value as? [String: AnyObject]
+        email = snapshotValue?["email"] as? String ?? "Неудалось получить данные"
+        lastName = snapshotValue?["last_name"] as? String ?? "Неудалось получить данные"
+        firstName = snapshotValue?["first_name"] as? String ?? "Неудалось получить данные"
+        picture = Picture(snapshot: snapshot)
+    }
+    
+    func convertToDictionary() -> [AnyHashable : Any] {
+        return ["email": email, "last_name": lastName, "first_name": firstName, "/picture/data/": picture.convertToDictionary()]
+    }
+}

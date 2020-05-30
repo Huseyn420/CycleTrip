@@ -97,8 +97,9 @@ final class MapPresenter {
     
     func createEvent(name: String, date: Date) {
         createdEvent = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
-        createdEvent.uploadEvent()
-        eventNames.append(name)
+        guard let key = ref.child("events").childByAutoId().key else { return }
+        ref.child("events/\(key)").setValue(createdEvent.convertToDictionary())
+        eventNames.append(key)
         ref.child("users").child(uid).child("eventNames").setValue(eventNames)
     }
     

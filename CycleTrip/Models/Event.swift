@@ -49,10 +49,11 @@ struct Event {
         }
         self.points = arrToPoints(arr: snapshotValue["points"] as! NSArray)
     }
-    func uploadEvent() {
+    func convertToDictionary() -> [AnyHashable : Any] {
         let pointDic = ["latitude": startPoint.latitude, "longitude":startPoint.longitude]
         let dictionary = ["name":name,"date":formatter.string(from: date), "startPoint": pointDic, "creator": creator, "points" : pointsToDic(points), "routeJSON" : routeJSON] as [String : Any]
-        ref.childByAutoId().setValue(dictionary)
+        return dictionary
+        
     }
     func pointsToDic(_ points:[CLLocationCoordinate2D]) -> [String : Any] {
         var pointsDic = [String:Any]()

@@ -7,31 +7,67 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import Firebase
 
 class UserInfoHeader: UIView {
     
     
+    
     let profileImageView: UIImageView = {
+        let uid = Auth.auth().currentUser!.uid
         let iv = UIImageView()
+        Database.database().reference().child("users").child(uid).observe(.value, with: { (DataSnapshot) in
+            let user = User(snapshot: DataSnapshot)
+            let a = user.imageURL
+
+        if a != nil {
+            iv.image = UIImage(named: "avatar")
+            }
+
+            
+        else
+        {
+            iv.image = UIImage(named: "avatar")
+        }
+        })
+        func didTapImageView(){
+
+            print("kzzkkzkzkkkkzkz")
+        }
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.image = UIImage(named: "avatar")
+            return iv
+        }()
         
-        return iv
-    }()
+    
+ 
     
     let usernameLabel: UILabel = {
+
+        let uid = Auth.auth().currentUser!.uid
         let label = UILabel()
-        label.text = "Имя пользователя"
+        Database.database().reference().child("users").child(uid).observe(.value, with: { (DataSnapshot) in
+            let user = User(snapshot: DataSnapshot)
+            let a = user.firstName
+            let b = user.lastName
+            let c = a + " " + b
+
+            print("\n\n\n\n\n \(a) \(b) \n\n\n\n\n")
+            label.text = c
+        })
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+        
     
     let emailLabel: UILabel = {
+        let user = Auth.auth().currentUser
+        let email = user?.email
         let label = UILabel()
-        label.text = "definitelyUsed@Mail.ru"
+        label.text = email
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,4 +99,6 @@ class UserInfoHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+   
 }
+

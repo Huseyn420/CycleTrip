@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Firebase
+import MessageUI
 
 private let reuseIdentifier = "SettingsCell"
-
+private let imagePicker = UIImagePickerController()
 //@available(iOS 13.0, *)
 class ViewController: UIViewController {
     
@@ -20,15 +22,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-    }
-
-    func UIColorFromRGB(rgbValue: UInt) -> UIColor {
-    return UIColor(
-    red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-    green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-    blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-    alpha: CGFloat(1.0)
-    )
     }
     
     func configureTableView() {
@@ -50,11 +43,52 @@ class ViewController: UIViewController {
     func configureUI() {
         configureTableView()
         
-        navigationController?.navigationBar.barTintColor = UIColorFromRGB(rgbValue: 0x4680C2)
+        navigationController?.navigationBar.barTintColor = CustomColor(0x4680C2)
         navigationItem.title = "Настройки"
     }
+    func showMailComposer() {
+        print("mail allert")
+        guard MFMailComposeViewController.canSendMail() else {
+            //Show alert informing the user
+             print("allert")
+            return
+        }
+        
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setToRecipients(["support@seanallen.co"])
+        composer.setSubject("HELP!")
+        composer.setMessageBody("памагити!", isHTML: false)
+        
+        present(composer, animated: true)
+    }
 }
-
+extension ViewController: MFMailComposeViewControllerDelegate {
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        if let _ = error {
+            //Show error alert
+            controller.dismiss(animated: true)
+            return
+        }
+        
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            print("Failed to send")
+        case .saved:
+            print("Saved")
+        case .sent:
+            print("Email Sent")
+        @unknown default:
+            break
+        }
+        
+        controller.dismiss(animated: true)
+    }
+}
 //@available(iOS 13.0, *)
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -79,7 +113,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = UIColorFromRGB(rgbValue: 0x4680C2)
+        view.backgroundColor = CustomColor(0x4680C2)
         
         print("Section is \(section)")
         
@@ -115,18 +149,89 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.sectionType = communications
         }
         return cell
-    
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = SettingsSection(rawValue: indexPath.section) else { return }
-        
-        switch section {
-        case .Social:
-            print(SocialOptions(rawValue: indexPath.row)?.description as Any)
-         case .Information:
-            print(InformationOptions(rawValue: indexPath.row)?.description as Any)
-        case .Communications:
-            print(CommunicationOptions(rawValue: indexPath.row)?.description as Any)
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+                guard let section = SettingsSection(rawValue: indexPath.section) else { return }
+                
+                switch section {
+                case .Social:
+                    if SocialOptions(rawValue: indexPath.row)!.rawValue == 0
+                    {
+                        self.editUserPassword()
+                    }
+                    if SocialOptions(rawValue: indexPath.row)!.rawValue == 1
+                    {
+                        let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler:{(action) in self.logout()}))
+                            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler:{ action in }))
+                            self.present(alert, animated: true, completion: nil)
+
+                    }
+                case .Information:
+                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 0
+                    {
+                        
+                        //userInfoHeader.emailLabel.text = "123@mail.ru"
+                    }
+                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 1
+                    {
+                        
+                    }
+                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 2{
+                        
+                        self.present(imagePicker, animated: true, completion: nil)
+                            print("как пук")
+                    }
+                case .Communications:
+                    if  CommunicationOptions(rawValue: indexPath.row)!.rawValue == 0
+                    {
+                        
+                    }
+                    if  CommunicationOptions(rawValue: indexPath.row)!.rawValue == 1
+                    {
+                        showMailComposer()
+                    }
+                }
+            }
+
+        func logout(){
+            let regView = AuthenticationView()
+            
+            regView.modalTransitionStyle = .crossDissolve
+            regView.modalPresentationStyle = .overCurrentContext
+            self.present(regView, animated: true, completion: nil)
+            //self.dismiss( animated: true, completion: nil)
+            }
+        func editUserPassword(){
+            let editUserPassword = EditUserPassword()
+                
+            editUserPassword.modalTransitionStyle = .crossDissolve
+            editUserPassword.modalPresentationStyle = .overCurrentContext
+            self.present(editUserPassword, animated: true, completion: nil)
         }
-    }
-}
+       
+        func checkForSending() {
+            Auth.auth().sendPasswordReset(withEmail: userInfoHeader.emailLabel.text!) { [weak self] (error) in
+            if error != nil {
+                //print(self!.userInfoHeader.emailLabel.text as Any)
+                self!.conclusion(title: "Ошибка",message: CauseOfError.mailNotFound.localizedDescription)
+                return
+            }
+            print(self!.userInfoHeader.emailLabel.text as Any)
+            self!.conclusion(title: "Успешно",message: "На вашу почту отправление ссылка для изменения пароля")
+            }
+        }
+        func conclusion(title: String, message: String?) {
+            let when = DispatchTime.now() + 1.2
+            let alert = UIAlertController(title: title,
+                                          message: message,
+                                          preferredStyle: .alert)
+            
+            
+            self.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: when) {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
+        }
+    

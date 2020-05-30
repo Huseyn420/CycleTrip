@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 import MapboxCoreNavigation
 import MapboxDirections
 import Mapbox
@@ -14,9 +15,19 @@ import Mapbox
 final class MapPresenter {
     var mapView: MGLMapView!
     var mapVC: MapVC!
-    var event: Event!
+    var createdEvent: Event!
+    var userEvents: [Event]! {
+        didSet {
+            createUserEventAnnotations()
+        }
+    }
+    var eventNames: [String]!
+    var userEventAnnotations: [MGLPointAnnotation]!
     var coordinates = [CLLocationCoordinate2D]()
-    var directionsRoute: Route?
+    var currentRoute: Route!
+//    var user: User!
+    let uid = Auth.auth().currentUser!.uid
+    let ref = Database.database().reference()
     func calculateRoute(coordinates: [CLLocationCoordinate2D],
                         completion: @escaping (Route?, Error?) -> ()) {
         
@@ -34,9 +45,9 @@ final class MapPresenter {
         // Generate the route object and draw it on the map
         Directions.shared.calculate(options) { [unowned self] (waypoints, routes, error) in
             guard error == nil else { print(error!.localizedDescription); return}
-            self.directionsRoute = routes?.first
+            self.currentRoute = routes?.first
             // Draw the route on the map after creating it
-            self.drawRoute(route: self.directionsRoute!)
+            self.drawRoute(route: self.currentRoute!)
         }
 
     }
@@ -85,10 +96,41 @@ final class MapPresenter {
     }
     
     func createEvent(name: String, date: Date) {
-        event = Event(name: name, date: date, startPoint: coordinates.first!)
-        event.upload()
-
+        createdEvent = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
+        createdEvent.uploadEvent()
+        eventNames.append(name)
+        ref.child("users").child(uid).child("eventNames").setValue(eventNames)
     }
+    
+
+    func getUserData() {
+        self.ref.child("users").child(uid).observe(.value, with: {[weak self] (snapshot) in
+            let snapshotValue = snapshot.value as! [String : Any]
+            self?.eventNames = snapshotValue["eventNames"] as? [String] ?? []
+            self?.getUserEvents()
+        })
+    }
+    func getUserEvents() {
+        self.ref.child("events").observe(.value, with: {[weak self] (snapshot) in
+            var events = [Event]()
+            for name in (self?.eventNames)! {
+                let event = Event(snapshot: snapshot.childSnapshot(forPath: name))
+                events.append(event)
+            }
+            self?.userEvents = events
+        })
+    }
+    func routeFromEvent(event: Event) {
+        var points = [Waypoint]()
+        points.append(Waypoint(coordinate: event.points[0], coordinateAccuracy: -1, name: "Start"))
+        for i in 1..<event.points.count-1 {
+            points.append(Waypoint(coordinate: event.points[i], coordinateAccuracy: -1, name: "Waypoint"))
+        }
+        points.append(Waypoint(coordinate: event.points[event.points.count-1], coordinateAccuracy: -1, name: "Finish"))
+        let options = NavigationRouteOptions(waypoints: points, profileIdentifier: .walking)
+        currentRoute = Route(json: event.routeJSON, waypoints: points, options: options)
+    }
+    
     
     func annotationBuilder(title: String, imageName: String, coordinate: CLLocationCoordinate2D) {
 //        // Create a basic point annotation and add it to the map
@@ -99,5 +141,16 @@ final class MapPresenter {
 //        annotation.title = "Start navigation"
 //        mapView.addAnnotation(annotation)
         
+    }
+    func createUserEventAnnotations() {
+        var annotations = [MGLPointAnnotation]()
+        for event in userEvents {
+            let annotation = MGLPointAnnotation()
+            annotation.coordinate = event.startPoint
+            annotation.title = event.name
+            annotation.subtitle = event.date.description
+            annotations.append(annotation)
+        }
+        mapView.addAnnotations(annotations)
     }
 }

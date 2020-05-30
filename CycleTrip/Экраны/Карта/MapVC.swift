@@ -14,10 +14,10 @@ import PinLayout
 final class MapVC: UIViewController, MGLMapViewDelegate {
     var mapView: MGLMapView = {
         let map = MGLMapView()
+        map.tintColor = .orange
         return map
     }()
     var presenter: MapPresenter!
-    var coordinates = [CLLocationCoordinate2D]()
     private var startButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("Создать событие", for: .normal)
@@ -43,10 +43,16 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         mapView.addGestureRecognizer(longPress)
+//        let tapRecogniser = UITapGestureRecognizer(target: self, action:#selector(showNavButtons))
         view.addSubview(mapView)
         view.addSubview(startButton)
         view.addSubview(stackView)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.getUserData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,7 +75,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     
     // Present the navigation view controller when the callout is selected
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        let navigationViewController = NavigationViewController(for: presenter.directionsRoute!)
+        let navigationViewController = NavigationViewController(for: presenter.currentRoute)
         navigationViewController.modalPresentationStyle = .fullScreen
         self.present(navigationViewController, animated: true, completion: nil)
     }
@@ -99,12 +105,15 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         presenter.longPress(coordinate: coordinate)
     }
     
+    
     @objc private func tappedCreateButton(sender: UIButton) {
         let navVC = NavVC()
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true, completion: nil)
         navVC.presenter = presenter
     }
+    
+    
     
     @objc private func tappedPlusButton(sender: UIButton) {
         mapView.setZoomLevel(mapView.zoomLevel + 2, animated: true)

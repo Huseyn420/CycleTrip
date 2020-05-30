@@ -28,7 +28,6 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
 }
 
 enum SocialOptions: Int, CaseIterable, SectionType{
-    case editProfile
     case editPassword
     case logout
     
@@ -38,12 +37,10 @@ enum SocialOptions: Int, CaseIterable, SectionType{
 
     var description: String {
         switch self {
-        case .editProfile:
-            return "Редактировать профиль"
         case .editPassword:
             return "Изменить пароль"
         case .logout:
-                 return "Выйти из аккаунта"
+            return "Выйти из аккаунта"
         }
     }
 }
@@ -51,6 +48,7 @@ enum SocialOptions: Int, CaseIterable, SectionType{
 enum InformationOptions: Int, CaseIterable, SectionType{
     case email
     case telephonenumbr
+    case editProfile
     
     var containsSwitch: Bool {
         return false
@@ -61,18 +59,20 @@ enum InformationOptions: Int, CaseIterable, SectionType{
     case .email:
              return "Email"
     case .telephonenumbr:
-                return "Номер телефона"
+            return "Номер телефона"
+    case .editProfile:
+            return "Редактировать фото"
                 }
     }
 }
 
 enum CommunicationOptions: Int, CaseIterable, SectionType{
-    case notifications
+    case biometry
     case reportCrashes
     
     var containsSwitch: Bool {
         switch self {
-        case .notifications: return true
+        case .biometry: return true
         case .reportCrashes: return false
         }
     }
@@ -80,10 +80,10 @@ enum CommunicationOptions: Int, CaseIterable, SectionType{
 
     var description: String{
         switch self {
-        case .notifications:
-            return "Уведомления"
+        case .biometry:
+            return "Вход по биометрии"
         case .reportCrashes:
-                 return "Сообщить об ошибке"
+            return "Сообщить об ошибке"
         }
     }
 }

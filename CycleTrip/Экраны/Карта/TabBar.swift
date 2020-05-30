@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 class TabBar: UITabBarController {
 
     override func viewDidLoad() {
@@ -15,12 +15,14 @@ class TabBar: UITabBarController {
         modalTransitionStyle = .coverVertical
         modalPresentationStyle = .fullScreen
         let viewController = ViewController()
-        let chatVC = ChannelsViewController()
+        
+        let channelsViewController = ChannelsViewController()
+
         let mapVC = MapVC()
         viewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person") , selectedImage: UIImage(systemName: "person.fill"))
         mapVC.tabBarItem = UITabBarItem(title: "Карта", image: UIImage(systemName: "map") , selectedImage: UIImage(systemName: "map.fill"))
-        chatVC.tabBarItem = UITabBarItem(title: "Чат", image: UIImage(systemName: "message") , selectedImage: UIImage(systemName: "message.fill"))
-        viewControllers = [chatVC, mapVC, viewController]
+        channelsViewController.tabBarItem = UITabBarItem(title: "Чат", image: UIImage(systemName: "message") , selectedImage: UIImage(systemName: "message.fill"))
+        viewControllers = [channelsViewController, mapVC, viewController]
         selectedIndex = 1
 
         // Do any additional setup after loading the view.

@@ -13,6 +13,9 @@
 		77D5DACF2482907A000DF9DC /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DACE2482907A000DF9DC /* SettingsSection.swift */; };
 		77D5DAD124829092000DF9DC /* EditUserInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DAD024829091000DF9DC /* EditUserInfoPresenter.swift */; };
 		77D5DAD32482909C000DF9DC /* EditUserPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DAD22482909C000DF9DC /* EditUserPassword.swift */; };
+		806032272482B6AB00C46D32 /* ChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032262482B6AB00C46D32 /* ChannelsViewController.swift */; };
+		8060322A2482B8CA00C46D32 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032292482B8CA00C46D32 /* Channel.swift */; };
+		8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */; };
 		93050F4C2481A57D0083F8A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050F4B2481A57D0083F8A0 /* AppDelegate.swift */; };
 		93050F4E2481A57D0083F8A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050F4D2481A57D0083F8A0 /* SceneDelegate.swift */; };
 		93050F552481A57F0083F8A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93050F542481A57F0083F8A0 /* Assets.xcassets */; };
@@ -58,6 +61,9 @@
 		77D5DAD024829091000DF9DC /* EditUserInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoPresenter.swift; sourceTree = "<group>"; };
 		77D5DAD22482909C000DF9DC /* EditUserPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserPassword.swift; sourceTree = "<group>"; };
 		7E6DC4CA8E5B343C7A530850 /* Pods-CycleTrip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CycleTrip.release.xcconfig"; path = "Target Support Files/Pods-CycleTrip/Pods-CycleTrip.release.xcconfig"; sourceTree = "<group>"; };
+		806032262482B6AB00C46D32 /* ChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsViewController.swift; sourceTree = "<group>"; };
+		806032292482B8CA00C46D32 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
 		93050F482481A57D0083F8A0 /* CycleTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93050F4B2481A57D0083F8A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93050F4D2481A57D0083F8A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +116,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		806032282482B6B600C46D32 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				93050FBE2481BB010083F8A0 /* ChatVCCell.swift */,
+				93050FBF2481BB010083F8A0 /* ChatVCwithConnection.swift */,
+				93050FC02481BB010083F8A0 /* ChatVC.swift */,
+				93050FC12481BB010083F8A0 /* CustomImageView.swift */,
+				93050FC22481BB010083F8A0 /* ChatAPI.swift */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		93050F3F2481A57D0083F8A0 = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +168,8 @@
 				93050F922481B61E0083F8A0 /* Event.swift */,
 				93050F932481B61E0083F8A0 /* Picture.swift */,
 				93050F912481B61E0083F8A0 /* User.swift */,
+				806032292482B8CA00C46D32 /* Channel.swift */,
+				8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -157,12 +177,12 @@
 		93050F9B2481BB000083F8A0 /* Экраны */ = {
 			isa = PBXGroup;
 			children = (
-				93050F9C2481BB000083F8A0 /* TabBar.swift */,
+				93050FBD2481BB010083F8A0 /* Чат */,
 				93050F9D2481BB000083F8A0 /* Авторизация */,
 				93050FAE2481BB010083F8A0 /* Профиль */,
+				93050FBC2481BB010083F8A0 /* MapVC.swift */,
 				93050FB52481BB010083F8A0 /* Создание маршрута */,
 				93050FB92481BB010083F8A0 /* Карта */,
-				93050FBD2481BB010083F8A0 /* Чат */,
 			);
 			path = "Экраны";
 			sourceTree = "<group>";
@@ -237,9 +257,9 @@
 		93050FB92481BB010083F8A0 /* Карта */ = {
 			isa = PBXGroup;
 			children = (
+				93050F9C2481BB000083F8A0 /* TabBar.swift */,
 				93050FBA2481BB010083F8A0 /* MapPresenter.swift */,
 				93050FBB2481BB010083F8A0 /* RoundButton.swift */,
-				93050FBC2481BB010083F8A0 /* MapVC.swift */,
 			);
 			path = "Карта";
 			sourceTree = "<group>";
@@ -247,11 +267,8 @@
 		93050FBD2481BB010083F8A0 /* Чат */ = {
 			isa = PBXGroup;
 			children = (
-				93050FBE2481BB010083F8A0 /* ChatVCCell.swift */,
-				93050FBF2481BB010083F8A0 /* ChatVCwithConnection.swift */,
-				93050FC02481BB010083F8A0 /* ChatVC.swift */,
-				93050FC12481BB010083F8A0 /* CustomImageView.swift */,
-				93050FC22481BB010083F8A0 /* ChatAPI.swift */,
+				806032282482B6B600C46D32 /* New Group */,
+				806032262482B6AB00C46D32 /* ChannelsViewController.swift */,
 			);
 			path = "Чат";
 			sourceTree = "<group>";
@@ -404,12 +421,14 @@
 				93050FCC2481BB010083F8A0 /* CustomColor.swift in Sources */,
 				77D5DAD32482909C000DF9DC /* EditUserPassword.swift in Sources */,
 				93050FDA2481BB010083F8A0 /* MapPresenter.swift in Sources */,
+				8060322A2482B8CA00C46D32 /* Channel.swift in Sources */,
 				93050FD92481BB010083F8A0 /* NavVC.swift in Sources */,
 				93050FCF2481BB010083F8A0 /* SpringTimingParameters.swift in Sources */,
 				93050FD82481BB010083F8A0 /* CustomCell.swift in Sources */,
 				93050FCE2481BB010083F8A0 /* CauseOfError.swift in Sources */,
 				93050FC52481BB010083F8A0 /* AuthPresenter.swift in Sources */,
 				93050F4C2481A57D0083F8A0 /* AppDelegate.swift in Sources */,
+				8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */,
 				93050FCA2481BB010083F8A0 /* ForgotPasswordView.swift in Sources */,
 				93050FE02481BB010083F8A0 /* CustomImageView.swift in Sources */,
 				93050FDF2481BB010083F8A0 /* ChatVC.swift in Sources */,
@@ -422,6 +441,7 @@
 				93050F952481B61E0083F8A0 /* Event.swift in Sources */,
 				93050FCD2481BB010083F8A0 /* CustomButton.swift in Sources */,
 				93050FC32481BB010083F8A0 /* TabBar.swift in Sources */,
+				806032272482B6AB00C46D32 /* ChannelsViewController.swift in Sources */,
 				93050FC72481BB010083F8A0 /* AnimatedPresenter.swift in Sources */,
 				77D5DAC92482903C000DF9DC /* SettingsCell.swift in Sources */,
 				93050FCB2481BB010083F8A0 /* AuthenticationView.swift in Sources */,

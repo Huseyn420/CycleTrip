@@ -17,7 +17,7 @@ class ChannelsViewController: UITableViewController {
     label.font = UIFont.systemFont(ofSize: 15)
     return label
   }()
-  
+  //test
   private let channelCellIdentifier = "channelCell"
   private var currentChannelAlertController: UIAlertController?
   

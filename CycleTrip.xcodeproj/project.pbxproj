@@ -3,16 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		77D5DAC92482903C000DF9DC /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DAC82482903C000DF9DC /* SettingsCell.swift */; };
-		77D5DACB24829045000DF9DC /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DACA24829045000DF9DC /* UserInfoHeader.swift */; };
-		77D5DACD2482904D000DF9DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DACC2482904D000DF9DC /* ViewController.swift */; };
-		77D5DACF2482907A000DF9DC /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DACE2482907A000DF9DC /* SettingsSection.swift */; };
-		77D5DAD124829092000DF9DC /* EditUserInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DAD024829091000DF9DC /* EditUserInfoPresenter.swift */; };
-		77D5DAD32482909C000DF9DC /* EditUserPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5DAD22482909C000DF9DC /* EditUserPassword.swift */; };
+		779DF6C72484443E0018D8B3 /* EditUserInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6C62484443E0018D8B3 /* EditUserInfoPresenter.swift */; };
+		779DF6C9248444500018D8B3 /* EditUserPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6C8248444500018D8B3 /* EditUserPassword.swift */; };
+		779DF6CB2484445E0018D8B3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CA2484445C0018D8B3 /* SettingsCell.swift */; };
+		779DF6CD248444680018D8B3 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CC248444670018D8B3 /* SettingsSection.swift */; };
+		779DF6CF248444710018D8B3 /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CE248444700018D8B3 /* UserInfoHeader.swift */; };
+		779DF6D1248444770018D8B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6D0248444770018D8B3 /* ViewController.swift */; };
 		806032272482B6AB00C46D32 /* ChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032262482B6AB00C46D32 /* ChannelsViewController.swift */; };
 		8060322A2482B8CA00C46D32 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032292482B8CA00C46D32 /* Channel.swift */; };
 		8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */; };
@@ -54,12 +54,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		77D5DAC82482903C000DF9DC /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
-		77D5DACA24829045000DF9DC /* UserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
-		77D5DACC2482904D000DF9DC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		77D5DACE2482907A000DF9DC /* SettingsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
-		77D5DAD024829091000DF9DC /* EditUserInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoPresenter.swift; sourceTree = "<group>"; };
-		77D5DAD22482909C000DF9DC /* EditUserPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserPassword.swift; sourceTree = "<group>"; };
+		779DF6C62484443E0018D8B3 /* EditUserInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoPresenter.swift; sourceTree = "<group>"; };
+		779DF6C8248444500018D8B3 /* EditUserPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserPassword.swift; sourceTree = "<group>"; };
+		779DF6CA2484445C0018D8B3 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		779DF6CC248444670018D8B3 /* SettingsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		779DF6CE248444700018D8B3 /* UserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
+		779DF6D0248444770018D8B3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7E6DC4CA8E5B343C7A530850 /* Pods-CycleTrip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CycleTrip.release.xcconfig"; path = "Target Support Files/Pods-CycleTrip/Pods-CycleTrip.release.xcconfig"; sourceTree = "<group>"; };
 		806032262482B6AB00C46D32 /* ChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsViewController.swift; sourceTree = "<group>"; };
 		806032292482B8CA00C46D32 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -234,12 +234,12 @@
 		93050FAE2481BB010083F8A0 /* Профиль */ = {
 			isa = PBXGroup;
 			children = (
-				77D5DACC2482904D000DF9DC /* ViewController.swift */,
-				77D5DACA24829045000DF9DC /* UserInfoHeader.swift */,
-				77D5DAC82482903C000DF9DC /* SettingsCell.swift */,
-				77D5DAD024829091000DF9DC /* EditUserInfoPresenter.swift */,
-				77D5DAD22482909C000DF9DC /* EditUserPassword.swift */,
-				77D5DACE2482907A000DF9DC /* SettingsSection.swift */,
+				779DF6D0248444770018D8B3 /* ViewController.swift */,
+				779DF6C62484443E0018D8B3 /* EditUserInfoPresenter.swift */,
+				779DF6C8248444500018D8B3 /* EditUserPassword.swift */,
+				779DF6CA2484445C0018D8B3 /* SettingsCell.swift */,
+				779DF6CC248444670018D8B3 /* SettingsSection.swift */,
+				779DF6CE248444700018D8B3 /* UserInfoHeader.swift */,
 			);
 			path = "Профиль";
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 				};
 			};
 			buildConfigurationList = 93050F432481A57D0083F8A0 /* Build configuration list for PBXProject "CycleTrip" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -409,17 +409,18 @@
 				93050F942481B61E0083F8A0 /* User.swift in Sources */,
 				93050F612481A9180083F8A0 /* CycleTrip.xcdatamodeld in Sources */,
 				93050FDD2481BB010083F8A0 /* ChatVCCell.swift in Sources */,
+				779DF6CB2484445E0018D8B3 /* SettingsCell.swift in Sources */,
 				93050FC92481BB010083F8A0 /* AnimatedView.swift in Sources */,
 				93050FD02481BB010083F8A0 /* CustomTextField.swift in Sources */,
 				93050FDB2481BB010083F8A0 /* RoundButton.swift in Sources */,
-				77D5DAD124829092000DF9DC /* EditUserInfoPresenter.swift in Sources */,
 				93050FD72481BB010083F8A0 /* TableVC.swift in Sources */,
 				93050FDC2481BB010083F8A0 /* MapVC.swift in Sources */,
+				779DF6CF248444710018D8B3 /* UserInfoHeader.swift in Sources */,
+				779DF6CD248444680018D8B3 /* SettingsSection.swift in Sources */,
 				93050FC82481BB010083F8A0 /* RegistrationView.swift in Sources */,
 				93050FDE2481BB010083F8A0 /* ChatVCwithConnection.swift in Sources */,
 				93050FC42481BB010083F8A0 /* RegPresenter.swift in Sources */,
 				93050FCC2481BB010083F8A0 /* CustomColor.swift in Sources */,
-				77D5DAD32482909C000DF9DC /* EditUserPassword.swift in Sources */,
 				93050FDA2481BB010083F8A0 /* MapPresenter.swift in Sources */,
 				8060322A2482B8CA00C46D32 /* Channel.swift in Sources */,
 				93050FD92481BB010083F8A0 /* NavVC.swift in Sources */,
@@ -430,20 +431,19 @@
 				93050F4C2481A57D0083F8A0 /* AppDelegate.swift in Sources */,
 				8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */,
 				93050FCA2481BB010083F8A0 /* ForgotPasswordView.swift in Sources */,
+				779DF6C72484443E0018D8B3 /* EditUserInfoPresenter.swift in Sources */,
 				93050FE02481BB010083F8A0 /* CustomImageView.swift in Sources */,
 				93050FDF2481BB010083F8A0 /* ChatVC.swift in Sources */,
 				93050FE12481BB010083F8A0 /* ChatAPI.swift in Sources */,
+				779DF6D1248444770018D8B3 /* ViewController.swift in Sources */,
 				93050FC62481BB010083F8A0 /* ForgotPasswordPresenter.swift in Sources */,
-				77D5DACB24829045000DF9DC /* UserInfoHeader.swift in Sources */,
-				77D5DACD2482904D000DF9DC /* ViewController.swift in Sources */,
 				93050F4E2481A57D0083F8A0 /* SceneDelegate.swift in Sources */,
-				77D5DACF2482907A000DF9DC /* SettingsSection.swift in Sources */,
 				93050F952481B61E0083F8A0 /* Event.swift in Sources */,
 				93050FCD2481BB010083F8A0 /* CustomButton.swift in Sources */,
 				93050FC32481BB010083F8A0 /* TabBar.swift in Sources */,
 				806032272482B6AB00C46D32 /* ChannelsViewController.swift in Sources */,
+				779DF6C9248444500018D8B3 /* EditUserPassword.swift in Sources */,
 				93050FC72481BB010083F8A0 /* AnimatedPresenter.swift in Sources */,
-				77D5DAC92482903C000DF9DC /* SettingsCell.swift in Sources */,
 				93050FCB2481BB010083F8A0 /* AuthenticationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,7 +582,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 55NW9WDHY6;
+				DEVELOPMENT_TEAM = 294A4F2T2H;
 				INFOPLIST_FILE = CycleTrip/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -602,7 +602,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 55NW9WDHY6;
+				DEVELOPMENT_TEAM = 294A4F2T2H;
 				INFOPLIST_FILE = CycleTrip/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -14,7 +14,7 @@ import PinLayout
 final class MapVC: UIViewController, MGLMapViewDelegate {
     var mapView = MGLMapView()
     var presenter: MapPresenter!
-    private var startButton: UIButton = {
+    var createButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("Создать событие", for: .normal)
         btn.backgroundColor = .systemBlue
@@ -58,7 +58,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         mapView.pin.all()
-        startButton.pin
+        createButton.pin
             .bottom(view.pin.safeArea.bottom + 20)
             .horizontally(30)
             .height(40)
@@ -68,8 +68,8 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
             .width(50)
             .right(view.pin.safeArea.right + 10)
         activity.pin.center()
-        startButton.layer.cornerRadius = startButton.bounds.midY
-        startButton.clipsToBounds = true
+        createButton.layer.cornerRadius = createButton.bounds.midY
+        createButton.clipsToBounds = true
     }
     
     
@@ -80,10 +80,10 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         mapView.isHidden = false
-        view.addSubview(startButton)
+        view.addSubview(createButton)
         view.addSubview(stackView)
         activity.stopAnimating()
-        let camera = MGLMapCamera(lookingAtCenter: mapView.userLocation!.coordinate, fromDistance: 4500, pitch: 30, heading: 0)
+        let camera = MGLMapCamera(lookingAtCenter: mapView.userLocation!.coordinate, acrossDistance: 4500, pitch: 30, heading: 0)
         mapView.fly(to: camera, withDuration: 6, peakAltitude: 3000, completionHandler: nil)
     }
     
@@ -97,9 +97,10 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
         mapView.setCenter(annotation.coordinate, animated: true)
-        for event in presenter.userEvents {
+        for (_,event) in presenter.userEvents {
             if event.startPoint == annotation.coordinate {
-                presenter.routeFromEvent(event: event)
+                presenter.showEventRoute(event: event)
+                break
             }
         }
     }
@@ -119,6 +120,23 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         }
         else { return nil }
     }
+
+    func mapView(_ mapView: MGLMapView, rightCalloutAccessoryViewFor annotation: MGLAnnotation) -> UIView? {
+    return UIButton(type: .detailDisclosure)
+    }
+    
+    func mapView(_ mapView: MGLMapView, annotation: MGLAnnotation, calloutAccessoryControlTapped control: UIControl) {
+        let alert = UIAlertController(title: annotation.title!!, message: "Выберите действие", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { (action) in
+            self.presenter.removeUserEvent(startPoint: annotation.coordinate)
+            mapView.deselectAnnotation(annotation, animated: true)
+            mapView.removeAnnotation(annotation)
+            })
+//        alert.addAction(UIAlertAction(title: "Начать движение", style: .default, handler: {
+//
+//        }))
+            self.present(alert, animated: true, completion: nil)
+    }
     
     func configureButtons() {
         plusButton.configure(iconName: "plus")
@@ -136,15 +154,19 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         stackView.spacing = 5
     }
     
+    func showSuccessAlert() {
+        let alert = UIAlertController(title: "Сохранено", message: "Вы успешно создали событие", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     //MARK: - @objc functions
     @objc private func didLongPress(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         // Converts point where user did a long press to map coordinates
         let point = sender.location(in: mapView)
         let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-        if presenter.coordinates.count > 1 {
-            startButton.isHidden = false
-        }
         presenter.longPress(coordinate: coordinate)
     }
     

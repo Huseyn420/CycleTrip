@@ -14,32 +14,25 @@ class UserInfoHeader: UIView {
     
     
     
-    let profileImageView: UIImageView = {
+    var profileImageView: UIImageView = {
         let uid = Auth.auth().currentUser!.uid
         let iv = UIImageView()
         Database.database().reference().child("users").child(uid).observe(.value, with: { (DataSnapshot) in
             let user = User(snapshot: DataSnapshot)
-            let a = user.picture.url
-
-        if a != nil {
-            iv.image = UIImage(named: "avatar")
-            }
-
             
-        else
-        {
-            iv.image = UIImage(named: "avatar")
-        }
+            iv.downloadedFrom(link: user.picture.url)
         })
+        
         func didTapImageView(){
 
             print("kzzkkzkzkkkkzkz")
         }
-        iv.contentMode = .scaleAspectFill
+
+        iv.sizeToFit()
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
-            return iv
-        }()
+        return iv
+    }()
         
     
  
@@ -99,6 +92,50 @@ class UserInfoHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-   
+    func saveImage(image: UIImage?) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        
+        guard let data = image?.pngData(), let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let riversRef = storageRef.child(uid)
+        
+        riversRef.putData(data, metadata: nil) { (metadata, error) in
+            guard error == nil else {
+                return
+            }
+            riversRef.downloadURL { (url, error) in
+                guard let downloadURL = url?.absoluteURL, error == nil, let image = image else {
+                    return
+                }
+                let url = "\(downloadURL)"
+                let ref = Database.database().reference().child("users").child(uid)
+                let update = ["height": image.size.height, "url": url, "width": image.size.width] as [String : Any]
+                ref.child("picture").child("data").updateChildValues(update) { (error, ref) in
+                    guard error == nil else {
+                        return
+                    }
+                }
+            }
+        }
+    }
 }
 
+extension UIImageView {
+    func downloadedFrom(link:String) {
+        guard let url = URL(string: link) else {
+            return
+        }
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, _, error) -> Void in
+            guard let data = data , error == nil, let image = UIImage(data: data) else {
+                return
+            }
+            DispatchQueue.main.async { () -> Void in
+                
+                self.image = image
+            }
+        }).resume()
+    }
+}

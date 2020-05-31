@@ -8,10 +8,9 @@ target 'CycleTrip' do
   # Pods for CycleTrip
 
   pod 'PinLayout'
-  pod 'PureLayout'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
-  pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
   pod 'FBSDKLoginKit'
   pod 'MapboxNavigation', '~> 0.39.0'
 end

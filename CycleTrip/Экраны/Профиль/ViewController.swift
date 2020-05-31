@@ -21,6 +21,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imagePicker.delegate = self
         configureUI()
     }
     
@@ -162,8 +164,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                     if SocialOptions(rawValue: indexPath.row)!.rawValue == 1
                     {
                         let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler:{(action) in self.logout()}))
-                            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler:{ action in }))
+                            alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler:{(action) in
+                                self.logout()
+                            }))
+                            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler:{ action in
+                                alert.dismiss(animated: true, completion: nil)
+                            }))
                             self.present(alert, animated: true, completion: nil)
 
                     }
@@ -194,8 +200,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
 
-        func logout(){
+        func logout() {
             let regView = AuthenticationView()
+            
+            do {
+                try Auth.auth().signOut()
+                self.dismiss(animated: true, completion: nil)
+            } catch let err {
+                    print(err)
+            }
             
             regView.modalTransitionStyle = .crossDissolve
             regView.modalPresentationStyle = .overCurrentContext
@@ -233,5 +246,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 alert.dismiss(animated: true, completion: nil)
             }
         }
-        }
-    
+    }
+
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        userInfoHeader.profileImageView.image = image
+        userInfoHeader.saveImage(image: image)
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+}

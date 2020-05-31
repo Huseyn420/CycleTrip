@@ -23,9 +23,9 @@ final class NavVC: UINavigationController {
         dismiss(animated: true, completion: nil)
     }
     @objc private func saveTapped(sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
         presenter.createEvent(name:tableVC.name, date:tableVC.date)
         tableVC.view.endEditing(true)
-        dismiss(animated: true, completion: nil)
     }
     
     

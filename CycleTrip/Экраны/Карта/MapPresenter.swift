@@ -15,18 +15,33 @@ import Mapbox
 final class MapPresenter {
     var mapView: MGLMapView!
     var mapVC: MapVC!
+    
     var createdEvent: Event!
-    var userEvents: [Event]! {
+    var currentRoute: Route!
+    var coordinates = [CLLocationCoordinate2D]()
+    var newEventAnnotations = [MGLPointAnnotation]()
+    
+    var userEvents: [String : Event]! {
         didSet {
             createUserEventAnnotations()
         }
     }
-    var eventNames: [String]!
+    private let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "E, d MMM yyyy"
+        return df
+    }()
+    private let timeFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "HH:mm"
+        return df
+    }()
+    var eventIDs: [String]!
     var userEventAnnotations: [MGLPointAnnotation]!
-    var coordinates = [CLLocationCoordinate2D]()
-    var currentRoute: Route!
+    
     let uid = Auth.auth().currentUser!.uid
     let ref = Database.database().reference()
+    
     func calculateRoute(coordinates: [CLLocationCoordinate2D],
                         completion: @escaping (Route?, Error?) -> ()) {
         
@@ -46,7 +61,7 @@ final class MapPresenter {
             guard error == nil else { print(error!.localizedDescription); return}
             self.currentRoute = routes?.first
             // Draw the route on the map after creating it
-            self.drawRoute(route: self.currentRoute!)
+            self.drawRoute(route: self.currentRoute)
         }
 
     }
@@ -58,12 +73,14 @@ final class MapPresenter {
     func longPress(coordinate: CLLocationCoordinate2D) {
         let annotation = MGLPointAnnotation()
         annotation.coordinate = coordinate
-        annotation.title = "Start navigation"
+        annotation.title = "\(coordinate)"
+        newEventAnnotations.append(annotation)
         mapView.addAnnotation(annotation)
         self.coordinates.append(coordinate)
         
         // Calculate the route from the user's location to the set destination
         if coordinates.count > 1 {
+            mapVC.createButton.isHidden = false
             calculateRoute(coordinates: self.coordinates) { (route, error) in
                 if error != nil {
                     print("Error calculating route") }
@@ -94,40 +111,40 @@ final class MapPresenter {
         }
     }
     
-//    func createEvent(name: String, date: Date) {
-//        createdEvent = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
-//        guard let key = ref.child("events").childByAutoId().key else { return }
-//        ref.child("events/\(key)").setValue(createdEvent.convertToDictionary())
-//        eventNames.append(key)
-//        ref.child("users").child(uid).child("eventNames").setValue(eventNames)
-//    }
+    
+    
     func createEvent(name: String, date: Date) {
         createdEvent = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
         guard let key = ref.child("events").childByAutoId().key else { return }
+        eventIDs.append(key)
+        userEvents[key] = createdEvent
         ref.child("events/\(key)").setValue(createdEvent.convertToDictionary())
-        eventNames.append(key)
-        ref.child("users").child(uid).child("eventNames").setValue(eventNames)
+        ref.child("users/\(uid)/eventIDs").setValue(eventIDs)
+
+        mapVC.createButton.isHidden = true
+        mapVC.showSuccessAlert()
+        cleanCash()
     }
     
 
     func getUserData() {
         self.ref.child("users").child(uid).observe(.value, with: {[weak self] (snapshot) in
             let snapshotValue = snapshot.value as! [String : Any]
-            self?.eventNames = snapshotValue["eventNames"] as? [String] ?? []
+            self?.eventIDs = snapshotValue["eventIDs"] as? [String] ?? []
             self?.getUserEvents()
         })
     }
     func getUserEvents() {
         self.ref.child("events").observe(.value, with: {[weak self] (snapshot) in
-            var events = [Event]()
-            for name in (self?.eventNames)! {
-                let event = Event(snapshot: snapshot.childSnapshot(forPath: name))
-                events.append(event)
+            var events = [String : Event]()
+            for id in (self?.eventIDs)! {
+                let event = Event(snapshot: snapshot.childSnapshot(forPath: id))
+                events[id] = event
             }
             self?.userEvents = events
         })
     }
-    func routeFromEvent(event: Event) {
+    func showEventRoute(event: Event) {
         var points = [Waypoint]()
         points.append(Waypoint(coordinate: event.points[0], coordinateAccuracy: -1, name: "Start"))
         for i in 1..<event.points.count-1 {
@@ -139,26 +156,38 @@ final class MapPresenter {
         drawRoute(route: currentRoute)
     }
     
-    
-    func annotationBuilder(title: String, imageName: String, coordinate: CLLocationCoordinate2D) {
-//        // Create a basic point annotation and add it to the map
-//        let annotation = MGLPointAnnotation()
-//        var image = UIImage(named: imageName)!
-//        image = image.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: image.size.height / 2, right: 0))
-//        annotation.coordinate = coordinate
-//        annotation.title = "Start navigation"
-//        mapView.addAnnotation(annotation)
-        
-    }
     func createUserEventAnnotations() {
         var annotations = [MGLPointAnnotation]()
-        for event in userEvents {
+        for (_,event) in userEvents {
             let annotation = MGLPointAnnotation()
             annotation.coordinate = event.startPoint
             annotation.title = event.name
-            annotation.subtitle = event.date.description
+            annotation.subtitle = "\(dateFormatter.string(from: event.date)) \(timeFormatter.string(from: event.date))"
             annotations.append(annotation)
         }
         mapView.addAnnotations(annotations)
     }
+    func cleanCash() {
+        createdEvent = nil
+        currentRoute = nil
+        coordinates = []
+        mapView.removeAnnotations(newEventAnnotations)
+        newEventAnnotations = []
+    }
+    func removeUserEvent(startPoint coordinates: CLLocationCoordinate2D) {
+        for (id,event) in userEvents {
+            if event.startPoint == coordinates {
+                userEvents.removeValue(forKey: id)
+                ref.child("events/\(id)").setValue(nil)
+                for i in 0...eventIDs.count {
+                    if eventIDs[i] == id {
+                        eventIDs.remove(at: i)
+                        ref.child("users/\(uid)/eventIDs").setValue(eventIDs)
+                        break }
+                }
+                break
+            }
+        }
+    }
+    
 }

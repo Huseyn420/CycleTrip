@@ -30,7 +30,9 @@ class EditUserPassword: UIViewController, UITextFieldDelegate, EditUserScreenVie
         sectionTitle.text = "Изменить пароль?"
         sectionTitle.font = UIFont(name: "Arial", size: 45)
         sectionTitle.textColor = CustomColor(0x4680C2)
-
+        sectionTitle.adjustsFontSizeToFitWidth = true
+        sectionTitle.minimumScaleFactor = 0.5
+        
         emailField.returnKeyType = .go
         
         emailField.delegate = self
@@ -53,8 +55,8 @@ class EditUserPassword: UIViewController, UITextFieldDelegate, EditUserScreenVie
         
         sectionTitle.pin
             .top(self.view.pin.safeArea.top + 50)
-            .hCenter()
-            .sizeToFit()
+            .horizontally(20)
+            .sizeToFit(.width)
 
         emailField.pin
             .vCenter(-100)

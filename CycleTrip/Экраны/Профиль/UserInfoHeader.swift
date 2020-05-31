@@ -28,7 +28,7 @@ class UserInfoHeader: UIView {
             print("kzzkkzkzkkkkzkz")
         }
 
-        iv.sizeToFit()
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv

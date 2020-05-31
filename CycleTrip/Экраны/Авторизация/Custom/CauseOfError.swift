@@ -27,7 +27,7 @@ extension CauseOfError: LocalizedError {
         case .mailNotFound:
             return NSLocalizedString("Данная почта не найдена", comment: "")
         case .invalidEmail:
-            return NSLocalizedString("Эта почта не существует или уже привязан к другому аккаунту", comment: "")
+        return NSLocalizedString("Такой почты не существует или она уже привязана к другому аккаунту", comment: "")
         case .unknownError:
             return NSLocalizedString("Непредвиденная ошибка", comment: "")
         case .serverError:

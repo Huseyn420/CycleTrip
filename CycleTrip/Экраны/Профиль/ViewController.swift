@@ -251,9 +251,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        userInfoHeader.profileImageView.image = image
-        userInfoHeader.saveImage(image: image)
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            userInfoHeader.profileImageView.image = image
+            userInfoHeader.saveImage(image: image)
+        }
+        
         imagePicker.dismiss(animated: true, completion: nil)
     }
 }

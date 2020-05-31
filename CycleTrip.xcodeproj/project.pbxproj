@@ -11,8 +11,8 @@
 		779DF6C9248444500018D8B3 /* EditUserPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6C8248444500018D8B3 /* EditUserPassword.swift */; };
 		779DF6CB2484445E0018D8B3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CA2484445C0018D8B3 /* SettingsCell.swift */; };
 		779DF6CD248444680018D8B3 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CC248444670018D8B3 /* SettingsSection.swift */; };
-		779DF6CF248444710018D8B3 /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CE248444700018D8B3 /* UserInfoHeader.swift */; };
-		779DF6D1248444770018D8B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6D0248444770018D8B3 /* ViewController.swift */; };
+		779DF6D324844DBE0018D8B3 /* UserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6D224844DBE0018D8B3 /* UserInfoHeader.swift */; };
+		779DF6D524844DC60018D8B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6D424844DC60018D8B3 /* ViewController.swift */; };
 		806032272482B6AB00C46D32 /* ChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032262482B6AB00C46D32 /* ChannelsViewController.swift */; };
 		8060322A2482B8CA00C46D32 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032292482B8CA00C46D32 /* Channel.swift */; };
 		8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */; };
@@ -58,8 +58,8 @@
 		779DF6C8248444500018D8B3 /* EditUserPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserPassword.swift; sourceTree = "<group>"; };
 		779DF6CA2484445C0018D8B3 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		779DF6CC248444670018D8B3 /* SettingsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
-		779DF6CE248444700018D8B3 /* UserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
-		779DF6D0248444770018D8B3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		779DF6D224844DBE0018D8B3 /* UserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeader.swift; sourceTree = "<group>"; };
+		779DF6D424844DC60018D8B3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7E6DC4CA8E5B343C7A530850 /* Pods-CycleTrip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CycleTrip.release.xcconfig"; path = "Target Support Files/Pods-CycleTrip/Pods-CycleTrip.release.xcconfig"; sourceTree = "<group>"; };
 		806032262482B6AB00C46D32 /* ChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsViewController.swift; sourceTree = "<group>"; };
 		806032292482B8CA00C46D32 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -234,12 +234,12 @@
 		93050FAE2481BB010083F8A0 /* Профиль */ = {
 			isa = PBXGroup;
 			children = (
-				779DF6D0248444770018D8B3 /* ViewController.swift */,
+				779DF6D424844DC60018D8B3 /* ViewController.swift */,
+				779DF6D224844DBE0018D8B3 /* UserInfoHeader.swift */,
 				779DF6C62484443E0018D8B3 /* EditUserInfoPresenter.swift */,
 				779DF6C8248444500018D8B3 /* EditUserPassword.swift */,
 				779DF6CA2484445C0018D8B3 /* SettingsCell.swift */,
 				779DF6CC248444670018D8B3 /* SettingsSection.swift */,
-				779DF6CE248444700018D8B3 /* UserInfoHeader.swift */,
 			);
 			path = "Профиль";
 			sourceTree = "<group>";
@@ -415,7 +415,7 @@
 				93050FDB2481BB010083F8A0 /* RoundButton.swift in Sources */,
 				93050FD72481BB010083F8A0 /* TableVC.swift in Sources */,
 				93050FDC2481BB010083F8A0 /* MapVC.swift in Sources */,
-				779DF6CF248444710018D8B3 /* UserInfoHeader.swift in Sources */,
+				779DF6D324844DBE0018D8B3 /* UserInfoHeader.swift in Sources */,
 				779DF6CD248444680018D8B3 /* SettingsSection.swift in Sources */,
 				93050FC82481BB010083F8A0 /* RegistrationView.swift in Sources */,
 				93050FDE2481BB010083F8A0 /* ChatVCwithConnection.swift in Sources */,
@@ -435,7 +435,7 @@
 				93050FE02481BB010083F8A0 /* CustomImageView.swift in Sources */,
 				93050FDF2481BB010083F8A0 /* ChatVC.swift in Sources */,
 				93050FE12481BB010083F8A0 /* ChatAPI.swift in Sources */,
-				779DF6D1248444770018D8B3 /* ViewController.swift in Sources */,
+				779DF6D524844DC60018D8B3 /* ViewController.swift in Sources */,
 				93050FC62481BB010083F8A0 /* ForgotPasswordPresenter.swift in Sources */,
 				93050F4E2481A57D0083F8A0 /* SceneDelegate.swift in Sources */,
 				93050F952481B61E0083F8A0 /* Event.swift in Sources */,

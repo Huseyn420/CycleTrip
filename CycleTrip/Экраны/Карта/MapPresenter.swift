@@ -136,6 +136,7 @@ final class MapPresenter {
         points.append(Waypoint(coordinate: event.points[event.points.count-1], coordinateAccuracy: -1, name: "Finish"))
         let options = NavigationRouteOptions(waypoints: points, profileIdentifier: .walking)
         currentRoute = Route(json: event.routeJSON, waypoints: points, options: options)
+        drawRoute(route: currentRoute)
     }
     
     

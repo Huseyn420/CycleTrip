@@ -75,7 +75,7 @@
 		93050F912481B61E0083F8A0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93050F922481B61E0083F8A0 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		93050F932481B61E0083F8A0 /* Picture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
-		93050F9C2481BB000083F8A0 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		93050F9C2481BB000083F8A0 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBar.swift; path = "Карта/TabBar.swift"; sourceTree = "<group>"; };
 		93050F9F2481BB000083F8A0 /* RegPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegPresenter.swift; sourceTree = "<group>"; };
 		93050FA02481BB000083F8A0 /* AuthPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		93050FA12481BB000083F8A0 /* ForgotPasswordPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPresenter.swift; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		93050FB82481BB010083F8A0 /* NavVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavVC.swift; sourceTree = "<group>"; };
 		93050FBA2481BB010083F8A0 /* MapPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
 		93050FBB2481BB010083F8A0 /* RoundButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
-		93050FBC2481BB010083F8A0 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		93050FBC2481BB010083F8A0 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapVC.swift; path = ../MapVC.swift; sourceTree = "<group>"; };
 		93050FBE2481BB010083F8A0 /* ChatVCCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVCCell.swift; sourceTree = "<group>"; };
 		93050FBF2481BB010083F8A0 /* ChatVCwithConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVCwithConnection.swift; sourceTree = "<group>"; };
 		93050FC02481BB010083F8A0 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -177,10 +177,10 @@
 		93050F9B2481BB000083F8A0 /* Экраны */ = {
 			isa = PBXGroup;
 			children = (
+				93050F9C2481BB000083F8A0 /* TabBar.swift */,
 				93050FBD2481BB010083F8A0 /* Чат */,
 				93050F9D2481BB000083F8A0 /* Авторизация */,
 				93050FAE2481BB010083F8A0 /* Профиль */,
-				93050FBC2481BB010083F8A0 /* MapVC.swift */,
 				93050FB52481BB010083F8A0 /* Создание маршрута */,
 				93050FB92481BB010083F8A0 /* Карта */,
 			);
@@ -257,7 +257,7 @@
 		93050FB92481BB010083F8A0 /* Карта */ = {
 			isa = PBXGroup;
 			children = (
-				93050F9C2481BB000083F8A0 /* TabBar.swift */,
+				93050FBC2481BB010083F8A0 /* MapVC.swift */,
 				93050FBA2481BB010083F8A0 /* MapPresenter.swift */,
 				93050FBB2481BB010083F8A0 /* RoundButton.swift */,
 			);

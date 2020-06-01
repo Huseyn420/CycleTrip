@@ -58,9 +58,9 @@ class ViewController: UIViewController {
         
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
-        composer.setToRecipients(["support@seanallen.co"])
+        composer.setToRecipients(["serge2000k@gmail.com", "huseyn20@gmail.com"])
         composer.setSubject("HELP!")
-        composer.setMessageBody("памагити!", isHTML: false)
+        composer.setMessageBody("Мне действительно очень нравится ваше приложение, но произошла ошибка. Мне нужна ваша помощь..", isHTML: false)
         
         present(composer, animated: true)
     }
@@ -106,8 +106,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         switch section {
         case .Social:
             return SocialOptions.allCases.count
-        case .Information:
-            return InformationOptions.allCases.count
         case .Communications:
             return CommunicationOptions.allCases.count
         }
@@ -143,9 +141,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case .Social:
             let social = SocialOptions(rawValue: indexPath.row)
             cell.sectionType = social
-        case .Information:
-            let information = InformationOptions(rawValue: indexPath.row)
-            cell.sectionType = information
         case .Communications:
             let communications = CommunicationOptions(rawValue: indexPath.row)
             cell.sectionType = communications
@@ -159,9 +154,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 case .Social:
                     if SocialOptions(rawValue: indexPath.row)!.rawValue == 0
                     {
-                        self.editUserPassword()
+                        self.present(imagePicker, animated: true, completion: nil)
+                        
                     }
                     if SocialOptions(rawValue: indexPath.row)!.rawValue == 1
+                    {
+                        self.editUserPassword()
+                    }
+                    if SocialOptions(rawValue: indexPath.row)!.rawValue == 2
                     {
                         let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler:{(action) in
@@ -172,17 +172,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                             }))
                             self.present(alert, animated: true, completion: nil)
 
-                    }
-                case .Information:
-                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 0
-                    {
-                        
-                        //userInfoHeader.emailLabel.text = "123@mail.ru"
-                    }
-                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 1 {
-                        
-                        self.present(imagePicker, animated: true, completion: nil)
-                            print("как пук")
                     }
                 case .Communications:
                     if  CommunicationOptions(rawValue: indexPath.row)!.rawValue == 0

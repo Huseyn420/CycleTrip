@@ -11,7 +11,6 @@ protocol SectionType: CustomStringConvertible {
 }
 
 enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
-    case Information
     case Social
     case Communications
     
@@ -19,8 +18,6 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
         switch self {
         case .Social:
             return "Общие"
-        case .Information:
-            return "Информация"
         case .Communications:
             return "Связь"
         }
@@ -28,6 +25,7 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
 }
 
 enum SocialOptions: Int, CaseIterable, SectionType{
+    case editProfile
     case editPassword
     case logout
     
@@ -37,29 +35,13 @@ enum SocialOptions: Int, CaseIterable, SectionType{
 
     var description: String {
         switch self {
+        case .editProfile:
+            return "Редактировать фото"
         case .editPassword:
             return "Изменить пароль"
         case .logout:
             return "Выйти из аккаунта"
         }
-    }
-}
-
-enum InformationOptions: Int, CaseIterable, SectionType{
-    case email
-    case editProfile
-    
-    var containsSwitch: Bool {
-        return false
-
-    }
-    var description: String {
-    switch self {
-    case .email:
-             return "Email"
-    case .editProfile:
-            return "Редактировать фото"
-                }
     }
 }
 

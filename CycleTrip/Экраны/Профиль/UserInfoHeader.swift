@@ -22,11 +22,6 @@ class UserInfoHeader: UIView {
             
             iv.downloadedFrom(link: user.picture.url)
         })
-        
-        func didTapImageView(){
-
-            print("kzzkkzkzkkkkzkz")
-        }
 
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true

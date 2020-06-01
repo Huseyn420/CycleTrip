@@ -138,13 +138,12 @@ class AuthenticationView: UIViewController, UITextFieldDelegate, AuthScreenView 
     }
     
     func processingResult(error: String?) {
-        let tabBar = TabBar()
-        
         buttonSignIn.loadingStop()
         buttonSignIn.isEnabled = true
         buttonSignUp.isEnabled = true
         
         if error == nil {
+            let tabBar = TabBar()
             self.present(tabBar, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Ошибка", message: error, preferredStyle: .alert)

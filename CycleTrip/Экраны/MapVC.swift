@@ -55,6 +55,12 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         btn.isHidden = true
         return btn
     }()
+    let backButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(systemName: "arrowshape.turn.up.left"), for: .normal)
+        btn.isHidden = true
+        return btn
+    }()
     
 
     
@@ -109,20 +115,24 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
             .bottom()
             .height(150)
         activity.pin.center()
-        numberOfPoints.pin
-            .right(15)
-            .bottom(105)
-            .width(100)
-            .height(40)
         distance.pin
             .hCenter()
             .bottom(105)
             .height(40)
             .width(100)
+        numberOfPoints.pin
+            .right(15)
+            .bottom(105)
+            .width(60)
+            .height(40)
         closeButton.pin
-            .size(30)
+            .size(40)
             .left(15)
             .bottom(105)
+        backButton.pin
+            .size(40)
+            .bottom(105)
+            .before(of: numberOfPoints)
         createButton.layer.cornerRadius = createButton.bounds.midY
         createButton.clipsToBounds = true
     }
@@ -135,6 +145,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         minusButton.addTarget(self, action: #selector(tappedMinusButton(sender:)), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(tappedLocationButton(sender:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(tappedCloseButton(sender:)), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(tappedBackButton(sender:)), for: .touchUpInside)
     }
     func configureStackView() {
         stackView = UIStackView(arrangedSubviews: [plusButton, minusButton, locationButton])
@@ -147,7 +158,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
 
     // Implement the delegate method that allows annotations to show callouts when tapped
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
+        return annotation.title != nil
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
@@ -160,6 +171,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         view.addSubview(numberOfPoints)
         view.addSubview(distance)
         view.addSubview(closeButton)
+        view.addSubview(backButton)
         
 
         let camera = MGLMapCamera(lookingAtCenter: mapView.userLocation!.coordinate, acrossDistance: 4500, pitch: 30, heading: 0)
@@ -185,20 +197,24 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         }
     }
     
-    // Present the navigation view controller when the callout is selected
-    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        let navigationViewController = NavigationViewController(for: presenter.currentRoute)
-        navigationViewController.modalPresentationStyle = .fullScreen
-        self.present(navigationViewController, animated: true, completion: nil)
-    }
-    
     
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        if let image = UIImage(named: "userEvents-icon") {
-            let annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "marker")
-            return annotationImage
+        if annotation.title != "" {
+            if var image = UIImage(named: "userEvents-icon") {
+                image = image.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: image.size.height / 2, right: image.size.width / 2))
+                let annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "marker")
+                return annotationImage
+            }
+            else { return nil }
         }
-        else { return nil }
+        else {
+            if var image = UIImage(named: "points-icon") {
+                image = image.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: image.size.height / 2, right: image.size.width / 2))
+                let annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: "point")
+                return annotationImage
+            }
+            else { return nil }
+        }
     }
 
     func mapView(_ mapView: MGLMapView, rightCalloutAccessoryViewFor annotation: MGLAnnotation) -> UIView? {
@@ -207,16 +223,16 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, annotation: MGLAnnotation, calloutAccessoryControlTapped control: UIControl) {
         let alert = UIAlertController(title: annotation.title!!, message: "Выберите действие", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { (action) in
-            self.presenter.removeUserEvent(startPoint: annotation.coordinate)
-            mapView.deselectAnnotation(annotation, animated: true)
-            mapView.removeAnnotation(annotation)
-            })
         alert.addAction(UIAlertAction(title: "Начать движение", style: .default, handler: { (action) in
             let navigationViewController = NavigationViewController(for: self.presenter.currentRoute)
             navigationViewController.modalPresentationStyle = .fullScreen
             self.present(navigationViewController, animated: true, completion: nil)
         }))
+        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { (action) in
+            self.presenter.removeUserEvent(startPoint: annotation.coordinate)
+            mapView.deselectAnnotation(annotation, animated: true)
+            mapView.removeAnnotation(annotation)
+            })
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
@@ -236,6 +252,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         distance.isHidden = flag
         createButton.isHidden = flag
         closeButton.isHidden = flag
+        backButton.isHidden = flag
     }
     
     func makeCreateButtonActive(_ flag: Bool) {
@@ -294,6 +311,10 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     @objc private func tappedCloseButton(sender: UIButton) {
         hideCreateStuff(true)
         presenter.cleanCash()
+    }
+    
+    @objc private func tappedBackButton(sender: UIButton) {
+        presenter.removePoint()
     }
     
 }

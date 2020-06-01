@@ -27,6 +27,8 @@ final class MapPresenter {
     let uid = Auth.auth().currentUser!.uid
     let ref = Database.database().reference()
     
+
+    var routeLayer: MGLLineStyleLayer!
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "E, d MMM yyyy"
@@ -54,7 +56,7 @@ final class MapPresenter {
         
         // Generate the route object and draw it on the map
         Directions.shared.calculate(options) { [unowned self] (waypoints, routes, error) in
-            guard error == nil else { print(error!.localizedDescription); return}
+            guard error == nil else { self.mapVC.makeCreateButtonActive(false); print(error!.localizedDescription); return}
             self.currentRoute = routes?.first
             // Draw the route on the map after creating it
             self.drawRoute(route: self.currentRoute)
@@ -71,20 +73,22 @@ final class MapPresenter {
     func addPoint(coordinate: CLLocationCoordinate2D) {
         let annotation = MGLPointAnnotation()
         annotation.coordinate = coordinate
-        annotation.title = "\(coordinate)"
+        annotation.title = ""
         newEventAnnotations.append(annotation)
         mapView.addAnnotation(annotation)
         self.coordinates.append(coordinate)
         
         // Calculate the route from the user's location to the set destination
-        mapVC.hideCreateStuff(!(coordinates.count > 0))
-        let flag = coordinates.count > 1
-        mapVC.makeCreateButtonActive(flag)
-        if flag {
+        let flag1 = !(coordinates.count > 0)
+        mapVC.hideCreateStuff(flag1)
+        if routeLayer != nil {
+            routeLayer.isVisible = flag1 }
+        let flag2 = coordinates.count > 1
+        mapVC.makeCreateButtonActive(flag2)
+        if flag2 {
             calculateRoute(coordinates: self.coordinates) { (route, error) in
                 if error != nil {
                     print("Error calculating route")
-                    self.mapVC.makeCreateButtonActive(false)
                 }
             }
             
@@ -94,11 +98,35 @@ final class MapPresenter {
         }
 
     }
+    
+    func removePoint() {
+        mapView.removeAnnotation(newEventAnnotations.last!)
+        newEventAnnotations.removeLast()
+        self.coordinates.removeLast()
+        
+        // Calculate the route from the user's location to the set destination
+        let flag1 = !(coordinates.count > 0)
+        mapVC.hideCreateStuff(flag1)
+        if routeLayer != nil {
+            routeLayer.isVisible = flag1 }
+        let flag2 = coordinates.count > 1
+        mapVC.makeCreateButtonActive(flag2)
+        if flag2 {
+            calculateRoute(coordinates: self.coordinates) { (route, error) in
+                if error != nil {
+                    print("Error calculating route")
+                }
+            }
+            
+        }
+        else { mapVC.numberOfPoints.text = "1/25"
+            mapVC.distance.text = "0 м"
+        }
+    }
 
 
     
     func drawRoute(route: Route) {
-        guard route.coordinateCount > 1 else { return }
         // Convert the route’s coordinates into a polyline
         var routeCoordinates = route.coordinates!
         let polyline = MGLPolylineFeature(coordinates: &routeCoordinates, count: route.coordinateCount)
@@ -106,17 +134,21 @@ final class MapPresenter {
         // If there's already a route line on the map, reset its shape to the new route
         if let source = mapView.style?.source(withIdentifier: "route-source") as? MGLShapeSource {
             source.shape = polyline
+            routeLayer.isVisible = true
         } else {
             let source = MGLShapeSource(identifier: "route-source", features: [polyline], options: nil)
+
             
             // Customize the route line color and width
             let lineStyle = MGLLineStyleLayer(identifier: "route-style", source: source)
             lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.9333333333, green: 0.6431372549, blue: 0.6549019608, alpha: 1))
             lineStyle.lineWidth = NSExpression(forConstantValue: 3)
+            self.routeLayer = lineStyle
+            routeLayer.isVisible = true
             
             // Add the source and style layer of the route line to the map
             mapView.style?.addSource(source)
-            mapView.style?.addLayer(lineStyle)
+            mapView.style?.addLayer(routeLayer)
         }
     }
     
@@ -133,6 +165,7 @@ final class MapPresenter {
         cleanCash()
         mapVC.hideCreateStuff(true)
         createUserEventAnnotation(event: event)
+        routeLayer.isVisible = false
     }
     
 
@@ -167,6 +200,7 @@ final class MapPresenter {
         currentRoute = Route(json: event.routeJSON, waypoints: points, options: options)
         drawRoute(route: currentRoute)
     }
+    
     func createUserEventAnnotation(event: Event) {
         let annotation = MGLPointAnnotation()
         annotation.coordinate = event.startPoint
@@ -203,6 +237,7 @@ final class MapPresenter {
                         break }
                 }
                 userEvents.removeValue(forKey: id)
+                routeLayer.isVisible = false
                 break
             }
         }

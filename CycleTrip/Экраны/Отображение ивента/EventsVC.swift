@@ -16,8 +16,8 @@ class EventsVC: UIViewController {
     let tableView = UITableView()
     let navigationBar = UINavigationBar()
     var safeArea: UILayoutGuide!
-    let amiboList = ["Chat1", "Chat2", "Chat3", "Chat4"]
-    let timeList = ["21.06.2020 at 2 pm", "23.06.2020 at 10 am", "01.05.2020 at 6 pm", "10.10.2020 at 5 pm"]
+//    let amiboList = ["Chat1", "Chat2", "Chat3", "Chat4"]
+//    let timeList = ["21.06.2020 at 2 pm", "23.06.2020 at 10 am", "01.05.2020 at 6 pm", "10.10.2020 at 5 pm"]
     let uid = Auth.auth().currentUser!.uid
     let ref = Database.database().reference()
     private let dateFormatter: DateFormatter = {
@@ -30,17 +30,26 @@ class EventsVC: UIViewController {
         df.dateFormat = "HH:mm"
         return df
     }()
+    
+    
+    
         override func viewDidLoad() {
             view.backgroundColor = .white
             safeArea=view.layoutMarginsGuide
+            tableView.delegate = self
             tableView.dataSource = self
             tableView.register(EventsVCCell.self, forCellReuseIdentifier: "cellid")
            // setupNavigationView()
             setupTableView()
             getUserData()
+            
            // print(self.events)
          //   ChatAPI.shared.fetchChatList() asd
+            
+            
+            
         }
+    
     // MARK: - Setup View
 //    func setupNavigationView(){
 //           view.addSubview(navigationBar)
@@ -50,19 +59,18 @@ class EventsVC: UIViewController {
 //       }
 
 
-override func viewWillAppear(_ animated: Bool) {
-  super.viewWillAppear(animated)
-  navigationController?.isToolbarHidden = false
-}
-
-override func viewWillDisappear(_ animated: Bool) {
-  super.viewWillDisappear(animated)
-  navigationController?.isToolbarHidden = true
-}
+//override func viewWillAppear(_ animated: Bool) {
+//  super.viewWillAppear(animated)
+//  navigationController?.isToolbarHidden = false
+//}
+//
+//override func viewWillDisappear(_ animated: Bool) {
+//  super.viewWillDisappear(animated)
+//  navigationController?.isToolbarHidden = true
+//}
         func setupTableView() {
             //always add the uiview first before setting constrains
             view.addSubview(tableView)
-            
             tableView.translatesAutoresizingMaskIntoConstraints = false
             tableView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -78,6 +86,9 @@ extension EventsVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       return 80
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(self.events.count)
@@ -96,8 +107,9 @@ extension EventsVC: UITableViewDelegate, UITableViewDataSource {
 //        EventsVCCell.nameLable.text = name
 //        EventsVCCell.whenItBeLable.text = time
         let name = self.events[indexPath.row].name
-        EventsVCCell.nameLable.text = name
-        EventsVCCell.whenItBeLable.text = "\(dateFormatter.string(from: self.events[indexPath.row].date)) \(timeFormatter.string(from: self.events[indexPath.row].date))"
+       // let distance = self.events[indexPath.row].routeJSON["distance"] as? String
+        EventsVCCell.nameLable.text = "Маршрут:\(name)"
+        EventsVCCell.whenItBeLable.text = "Когда:\(dateFormatter.string(from: self.events[indexPath.row].date)) \(timeFormatter.string(from: self.events[indexPath.row].date))"
         
         return cell
     }
@@ -106,7 +118,8 @@ extension EventsVC: UITableViewDelegate, UITableViewDataSource {
          let myEvent = events[indexPath.row]
          let vc = EventDesctiptionVC()
          vc.event = myEvent
-         navigationController?.pushViewController(vc, animated: true)
+        self.present(vc,animated: true)
+         //navigationController?.pushViewController(vc, animated: true)
     }
     
     func getUserData() {

@@ -46,9 +46,9 @@ class EventsVCCell: UITableViewCell{
         
         nameLable.translatesAutoresizingMaskIntoConstraints = false
         nameLable.leadingAnchor.constraint(equalTo: imageIV.trailingAnchor, constant: 5 ).isActive=true
-        nameLable.topAnchor.constraint(equalTo: topAnchor, constant : 5).isActive = true
+        nameLable.topAnchor.constraint(equalTo: topAnchor, constant : 15).isActive = true
         
-        nameLable.font = UIFont( name: "Verdana-Bold", size: 16)
+        nameLable.font = UIFont( name: "Verdana-Bold", size: 20)
     }
     func setupWhenItBe(){
     addSubview(whenItBeLable)

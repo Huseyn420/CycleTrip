@@ -194,13 +194,12 @@ class RegistrationView: UIViewController, UITextFieldDelegate, RegScreenView {
     }
 
     func processingResult(error: String?) {
-        let tabBar = TabBar()
-
         backButton.isEnabled = true
         continueButton.isEnabled = true
         continueButton.loadingStop()
 
         if error == nil {
+            let tabBar = TabBar()
             self.present(tabBar, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Ошибка", message: error, preferredStyle: .alert)

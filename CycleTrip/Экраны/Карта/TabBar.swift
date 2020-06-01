@@ -15,16 +15,15 @@ class TabBar: UITabBarController {
         modalTransitionStyle = .coverVertical
         modalPresentationStyle = .fullScreen
         let viewController = ViewController()
-        let viewController1 = ViewController()
+        let viewController1 = EventsVC()
 //        let channelsViewController = ChannelsViewController()
 
         let mapVC = MapVC()
         viewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person") , selectedImage: UIImage(systemName: "person.fill"))
         mapVC.tabBarItem = UITabBarItem(title: "Карта", image: UIImage(systemName: "map") , selectedImage: UIImage(systemName: "map.fill"))
-        viewController1.tabBarItem = UITabBarItem(title: "Чат", image: UIImage(systemName: "message") , selectedImage: UIImage(systemName: "message.fill"))
+        viewController1.tabBarItem = UITabBarItem(title: "Маршруты", image: UIImage(systemName: "star") , selectedImage: UIImage(systemName: "star.fill"))
         viewControllers = [viewController1, mapVC, viewController]
         selectedIndex = 1
-
         // Do any additional setup after loading the view.
     }
     

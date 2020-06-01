@@ -16,6 +16,9 @@
 		806032272482B6AB00C46D32 /* ChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032262482B6AB00C46D32 /* ChannelsViewController.swift */; };
 		8060322A2482B8CA00C46D32 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806032292482B8CA00C46D32 /* Channel.swift */; };
 		8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */; };
+		8066030224846ED900D629A8 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066030124846ED900D629A8 /* EventsVC.swift */; };
+		806603052484712100D629A8 /* EvenstVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806603032484712100D629A8 /* EvenstVCCell.swift */; };
+		806603062484712100D629A8 /* EventDesctiptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806603042484712100D629A8 /* EventDesctiptionVC.swift */; };
 		93050F4C2481A57D0083F8A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050F4B2481A57D0083F8A0 /* AppDelegate.swift */; };
 		93050F4E2481A57D0083F8A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050F4D2481A57D0083F8A0 /* SceneDelegate.swift */; };
 		93050F552481A57F0083F8A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93050F542481A57F0083F8A0 /* Assets.xcassets */; };
@@ -64,6 +67,9 @@
 		806032262482B6AB00C46D32 /* ChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsViewController.swift; sourceTree = "<group>"; };
 		806032292482B8CA00C46D32 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		8060322B2482C3C300C46D32 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
+		8066030124846ED900D629A8 /* EventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
+		806603032484712100D629A8 /* EvenstVCCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvenstVCCell.swift; sourceTree = "<group>"; };
+		806603042484712100D629A8 /* EventDesctiptionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDesctiptionVC.swift; sourceTree = "<group>"; };
 		93050F482481A57D0083F8A0 /* CycleTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93050F4B2481A57D0083F8A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93050F4D2481A57D0083F8A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +134,16 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		8066030024846E4C00D629A8 /* Отображение ивента */ = {
+			isa = PBXGroup;
+			children = (
+				806603032484712100D629A8 /* EvenstVCCell.swift */,
+				806603042484712100D629A8 /* EventDesctiptionVC.swift */,
+				8066030124846ED900D629A8 /* EventsVC.swift */,
+			);
+			path = "Отображение ивента";
+			sourceTree = "<group>";
+		};
 		93050F3F2481A57D0083F8A0 = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +193,7 @@
 		93050F9B2481BB000083F8A0 /* Экраны */ = {
 			isa = PBXGroup;
 			children = (
+				8066030024846E4C00D629A8 /* Отображение ивента */,
 				93050F9C2481BB000083F8A0 /* TabBar.swift */,
 				93050FBD2481BB010083F8A0 /* Чат */,
 				93050F9D2481BB000083F8A0 /* Авторизация */,
@@ -409,6 +426,7 @@
 				93050F942481B61E0083F8A0 /* User.swift in Sources */,
 				93050F612481A9180083F8A0 /* CycleTrip.xcdatamodeld in Sources */,
 				93050FDD2481BB010083F8A0 /* ChatVCCell.swift in Sources */,
+				8066030224846ED900D629A8 /* EventsVC.swift in Sources */,
 				779DF6CB2484445E0018D8B3 /* SettingsCell.swift in Sources */,
 				93050FC92481BB010083F8A0 /* AnimatedView.swift in Sources */,
 				93050FD02481BB010083F8A0 /* CustomTextField.swift in Sources */,
@@ -419,6 +437,7 @@
 				779DF6CD248444680018D8B3 /* SettingsSection.swift in Sources */,
 				93050FC82481BB010083F8A0 /* RegistrationView.swift in Sources */,
 				93050FDE2481BB010083F8A0 /* ChatVCwithConnection.swift in Sources */,
+				806603062484712100D629A8 /* EventDesctiptionVC.swift in Sources */,
 				93050FC42481BB010083F8A0 /* RegPresenter.swift in Sources */,
 				93050FCC2481BB010083F8A0 /* CustomColor.swift in Sources */,
 				93050FDA2481BB010083F8A0 /* MapPresenter.swift in Sources */,
@@ -427,6 +446,7 @@
 				93050FCF2481BB010083F8A0 /* SpringTimingParameters.swift in Sources */,
 				93050FD82481BB010083F8A0 /* CustomCell.swift in Sources */,
 				93050FCE2481BB010083F8A0 /* CauseOfError.swift in Sources */,
+				806603052484712100D629A8 /* EvenstVCCell.swift in Sources */,
 				93050FC52481BB010083F8A0 /* AuthPresenter.swift in Sources */,
 				93050F4C2481A57D0083F8A0 /* AppDelegate.swift in Sources */,
 				8060322C2482C3C300C46D32 /* DatabaseRepresentation.swift in Sources */,

@@ -15,13 +15,18 @@ import Mapbox
 final class MapPresenter {
     var mapView: MGLMapView!
     var mapVC: MapVC!
-    
-    var createdEvent: Event!
     var currentRoute: Route!
     var coordinates = [CLLocationCoordinate2D]()
     var newEventAnnotations = [MGLPointAnnotation]()
     
     var userEvents: [String : Event]!
+
+    var eventIDs: [String]!
+    var userEventAnnotations = [MGLPointAnnotation]()
+    
+    let uid = Auth.auth().currentUser!.uid
+    let ref = Database.database().reference()
+    
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "E, d MMM yyyy"
@@ -32,12 +37,6 @@ final class MapPresenter {
         df.dateFormat = "HH:mm"
         return df
     }()
-    var eventIDs: [String]!
-    var userEventAnnotations = [MGLPointAnnotation]()
-    
-    let uid = Auth.auth().currentUser!.uid
-    let ref = Database.database().reference()
-    
     
     func calculateRoute(coordinates: [CLLocationCoordinate2D],
                         completion: @escaping (Route?, Error?) -> ()) {
@@ -61,7 +60,7 @@ final class MapPresenter {
             self.drawRoute(route: self.currentRoute)
             self.mapVC.numberOfPoints.text = "\(coordinates.count)/25"
             let distance = self.currentRoute?.distance ?? 0
-            self.mapVC.distance.text = "\(distance) м"
+            self.mapVC.distance.text = "\(Int(distance)/100*100) м"
         }
     }
     init(mapVC: MapVC) {
@@ -96,6 +95,7 @@ final class MapPresenter {
 
     }
 
+
     
     func drawRoute(route: Route) {
         guard route.coordinateCount > 1 else { return }
@@ -129,7 +129,6 @@ final class MapPresenter {
         userEvents[key] = event
         ref.child("events/\(key)").setValue(event.convertToDictionary())
         ref.child("users/\(uid)/eventIDs").setValue(eventIDs)
-        mapVC.createButton.isHidden = true
         mapVC.showSuccessAlert()
         cleanCash()
         mapVC.hideCreateStuff(true)
@@ -138,16 +137,18 @@ final class MapPresenter {
     
 
     func getUserData() {
-        self.ref.child("users").child(uid).observe(.value, with: {[weak self] (snapshot) in
+        self.ref.child("users").child(uid).observeSingleEvent(of: .value, with: {[weak self] (snapshot) in
             let snapshotValue = snapshot.value as! [String : Any]
             self?.eventIDs = snapshotValue["eventIDs"] as? [String] ?? []
             self?.getUserEvents()
         })
+        
     }
     func getUserEvents() {
-        self.ref.child("events").observe(.value, with: {[weak self] (snapshot) in
+        self.ref.child("events").observeSingleEvent(of: .value, with: {[weak self] (snapshot) in
             var events = [String : Event]()
             for id in (self?.eventIDs)! {
+                
                 let event = Event(snapshot: snapshot.childSnapshot(forPath: id))
                 events[id] = event
             }
@@ -187,7 +188,6 @@ final class MapPresenter {
         mapView.addAnnotations(annotations)
     }
     func cleanCash() {
-        createdEvent = nil
         currentRoute = nil
         coordinates = []
         mapView.removeAnnotations(newEventAnnotations)
@@ -196,14 +196,13 @@ final class MapPresenter {
     func removeUserEvent(startPoint coordinates: CLLocationCoordinate2D) {
         for (id,event) in userEvents {
             if event.startPoint == coordinates {
-                userEvents.removeValue(forKey: id)
-                ref.child("events/\(id)").setValue(nil)
                 for i in 0...eventIDs.count {
                     if eventIDs[i] == id {
                         eventIDs.remove(at: i)
                         ref.child("users/\(uid)/eventIDs").setValue(eventIDs)
                         break }
                 }
+                userEvents.removeValue(forKey: id)
                 break
             }
         }

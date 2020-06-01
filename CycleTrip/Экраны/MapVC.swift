@@ -212,10 +212,15 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
             mapView.deselectAnnotation(annotation, animated: true)
             mapView.removeAnnotation(annotation)
             })
-//        alert.addAction(UIAlertAction(title: "Начать движение", style: .default, handler: {
-//
-//        }))
-            self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Начать движение", style: .default, handler: { (action) in
+            let navigationViewController = NavigationViewController(for: self.presenter.currentRoute)
+            navigationViewController.modalPresentationStyle = .fullScreen
+            self.present(navigationViewController, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     func showSuccessAlert() {

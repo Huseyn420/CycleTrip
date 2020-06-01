@@ -14,35 +14,72 @@ import PinLayout
 final class MapVC: UIViewController, MGLMapViewDelegate {
     var mapView = MGLMapView()
     var presenter: MapPresenter!
-    var createButton: UIButton = {
+    var stackView: UIStackView!
+    let plusButton = RoundButton()
+    let minusButton = RoundButton()
+    let locationButton = RoundButton()
+    let activity = UIActivityIndicatorView(style: .large)
+    let routeCreationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
+    let createButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("Создать событие", for: .normal)
-        btn.backgroundColor = .systemBlue
+        btn.backgroundColor = .lightGray
         btn.addTarget(self, action: #selector(tappedCreateButton(sender:)), for: .touchUpInside)
+        btn.isEnabled = false
         btn.isHidden = true
         return btn
     }()
-    var plusButton = RoundButton()
-    var minusButton = RoundButton()
-    var locationButton = RoundButton()
-    var stackView: UIStackView!
-    var activity = UIActivityIndicatorView(style: .large)
+    let numberOfPoints: UILabel = {
+        let label = UILabel()
+        
+        label.textAlignment = .right
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.isHidden = true
+        return label
+    }()
+    let distance: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.isHidden = true
+        return label
+    }()
+    let closeButton: UIButton = {
+        let btn = UIButton(type: .close)
+        btn.isHidden = true
+        return btn
+    }()
+    
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         presenter = MapPresenter(mapVC: self)
+        
         mapView.showsUserLocation = true
         mapView.showsHeading = true
         mapView.delegate = self
         mapView.setCenter(CLLocationCoordinate2D(latitude: 55.453013, longitude: 48.205561), zoomLevel: 3, animated: false)
+
+        view.addSubview(mapView)
+        mapView.isHidden = true
+        
         configureButtons()
         configureStackView()
+        
         // Add a gesture recognizer to the map view
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
         mapView.addGestureRecognizer(longPress)
-//        let tapRecogniser = UITapGestureRecognizer(target: self, action:#selector(showNavButtons))
-        view.addSubview(mapView)
-        mapView.isHidden = true
+
+
         view.addSubview(activity)
         activity.startAnimating()
         activity.hidesWhenStopped = true
@@ -59,20 +96,55 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         super.viewDidLayoutSubviews()
         mapView.pin.all()
         createButton.pin
-            .bottom(view.pin.safeArea.bottom + 20)
-            .horizontally(30)
+            .bottom(view.pin.safeArea.bottom + 10)
+            .horizontally(15)
             .height(40)
         stackView.pin
             .vCenter()
             .height(160)
             .width(50)
             .right(view.pin.safeArea.right + 10)
+        routeCreationView.pin
+            .horizontally()
+            .bottom()
+            .height(150)
         activity.pin.center()
+        numberOfPoints.pin
+            .right(15)
+            .bottom(105)
+            .width(100)
+            .height(40)
+        distance.pin
+            .hCenter()
+            .bottom(105)
+            .height(40)
+            .width(100)
+        closeButton.pin
+            .size(30)
+            .left(15)
+            .bottom(105)
         createButton.layer.cornerRadius = createButton.bounds.midY
         createButton.clipsToBounds = true
     }
     
+    func configureButtons() {
+        plusButton.configure(iconName: "plus")
+        minusButton.configure(iconName: "minus")
+        locationButton.configure(iconName: "location.fill")
+        plusButton.addTarget(self, action: #selector(tappedPlusButton(sender:)), for: .touchUpInside)
+        minusButton.addTarget(self, action: #selector(tappedMinusButton(sender:)), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(tappedLocationButton(sender:)), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(tappedCloseButton(sender:)), for: .touchUpInside)
+    }
+    func configureStackView() {
+        stackView = UIStackView(arrangedSubviews: [plusButton, minusButton, locationButton])
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 5
+    }
     
+
     // Implement the delegate method that allows annotations to show callouts when tapped
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return true
@@ -80,20 +152,28 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
     
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         mapView.isHidden = false
-        view.addSubview(createButton)
-        view.addSubview(stackView)
         activity.stopAnimating()
+        
+        view.addSubview(stackView)
+        view.addSubview(routeCreationView)
+        view.addSubview(createButton)
+        view.addSubview(numberOfPoints)
+        view.addSubview(distance)
+        view.addSubview(closeButton)
+        
+
         let camera = MGLMapCamera(lookingAtCenter: mapView.userLocation!.coordinate, acrossDistance: 4500, pitch: 30, heading: 0)
         mapView.fly(to: camera, withDuration: 6, peakAltitude: 3000, completionHandler: nil)
     }
     
     func mapViewDidFailLoadingMap(_ mapView: MGLMapView, withError error: Error) {
         activity.stopAnimating()
-        let alert = UIAlertController(title: "Ошибка", message: "Невозможно загрузить крату. Проверьте подключение к интернету", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Ошибка", message: "Невозможно загрузить карту. Проверьте подключение к интернету", preferredStyle: .alert)
         let action = UIAlertAction(title: "ОК", style: .cancel, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+    
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
         mapView.setCenter(annotation.coordinate, animated: true)
@@ -138,27 +218,29 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
             self.present(alert, animated: true, completion: nil)
     }
     
-    func configureButtons() {
-        plusButton.configure(iconName: "plus")
-        minusButton.configure(iconName: "minus")
-        locationButton.configure(iconName: "location.fill")
-        plusButton.addTarget(self, action: #selector(tappedPlusButton(sender:)), for: .touchUpInside)
-        minusButton.addTarget(self, action: #selector(tappedMinusButton(sender:)), for: .touchUpInside)
-        locationButton.addTarget(self, action: #selector(tappedLocationButton(sender:)), for: .touchUpInside)
-    }
-    func configureStackView() {
-        stackView = UIStackView(arrangedSubviews: [plusButton, minusButton, locationButton])
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.alignment = .fill
-        stackView.spacing = 5
-    }
-    
     func showSuccessAlert() {
         let alert = UIAlertController(title: "Сохранено", message: "Вы успешно создали событие", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func hideCreateStuff(_ flag: Bool) {
+        routeCreationView.isHidden = flag
+        numberOfPoints.isHidden = flag
+        distance.isHidden = flag
+        createButton.isHidden = flag
+        closeButton.isHidden = flag
+    }
+    
+    func makeCreateButtonActive(_ flag: Bool) {
+        createButton.isEnabled = flag
+        switch flag {
+        case true:
+            createButton.backgroundColor = .systemBlue
+        case false:
+            createButton.backgroundColor = .lightGray
+        }
     }
     
     //MARK: - @objc functions
@@ -167,7 +249,7 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         // Converts point where user did a long press to map coordinates
         let point = sender.location(in: mapView)
         let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-        presenter.longPress(coordinate: coordinate)
+        presenter.addPoint(coordinate: coordinate)
     }
     
     
@@ -204,4 +286,9 @@ final class MapVC: UIViewController, MGLMapViewDelegate {
         
         mapView.userTrackingMode = mode
     }
+    @objc private func tappedCloseButton(sender: UIButton) {
+        hideCreateStuff(true)
+        presenter.cleanCash()
+    }
+    
 }

@@ -47,7 +47,6 @@ enum SocialOptions: Int, CaseIterable, SectionType{
 
 enum InformationOptions: Int, CaseIterable, SectionType{
     case email
-    case telephonenumbr
     case editProfile
     
     var containsSwitch: Bool {
@@ -58,8 +57,6 @@ enum InformationOptions: Int, CaseIterable, SectionType{
     switch self {
     case .email:
              return "Email"
-    case .telephonenumbr:
-            return "Номер телефона"
     case .editProfile:
             return "Редактировать фото"
                 }

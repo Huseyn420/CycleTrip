@@ -179,11 +179,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                         
                         //userInfoHeader.emailLabel.text = "123@mail.ru"
                     }
-                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 1
-                    {
-                        
-                    }
-                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 2{
+                    if InformationOptions(rawValue: indexPath.row)!.rawValue == 1 {
                         
                         self.present(imagePicker, animated: true, completion: nil)
                             print("как пук")
@@ -201,20 +197,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
 
         func logout() {
-            let regView = AuthenticationView()
-            
+            let firebaseAuth = Auth.auth()
             do {
-                try Auth.auth().signOut()
+                try firebaseAuth.signOut()
                 self.dismiss(animated: true, completion: nil)
-            } catch let err {
-                    print(err)
+            } catch let signOutError as NSError {
+              print ("Error signing out: %@", signOutError)
             }
-            
-            regView.modalTransitionStyle = .crossDissolve
-            regView.modalPresentationStyle = .overCurrentContext
-            self.present(regView, animated: true, completion: nil)
-            //self.dismiss( animated: true, completion: nil)
-            }
+        }
         func editUserPassword(){
             let editUserPassword = EditUserPassword()
                 

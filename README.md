@@ -10,3 +10,5 @@
 [Игорь Лебедев](https://vk.com/sidorpirogov)
 
 [Владимир Овсянников](https://vk.com/vovant_t)
+
+[Сергей Киселев](https://vk.com/s_kiselev1)

@@ -12,30 +12,15 @@ class TabBar: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        modalTransitionStyle = .coverVertical
-        modalPresentationStyle = .fullScreen
-        let viewController = ViewController()
-        let viewController1 = EventsVC()
-//        let channelsViewController = ChannelsViewController()
-
-        let mapVC = MapVC()
-        viewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person") , selectedImage: UIImage(systemName: "person.fill"))
+        let eventsVC = EventsViewController()
+        let mapVC = MapViewController()
+        let profileVC = ProfileViewController()
+        eventsVC.tabBarItem = UITabBarItem(title: "Маршруты", image: UIImage(systemName: "star") , selectedImage: UIImage(systemName: "star.fill"))
         mapVC.tabBarItem = UITabBarItem(title: "Карта", image: UIImage(systemName: "map") , selectedImage: UIImage(systemName: "map.fill"))
-        viewController1.tabBarItem = UITabBarItem(title: "Маршруты", image: UIImage(systemName: "star") , selectedImage: UIImage(systemName: "star.fill"))
-        viewControllers = [viewController1, mapVC, viewController]
-        selectedIndex = 1
-        // Do any additional setup after loading the view.
+        profileVC.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person") , selectedImage: UIImage(systemName: "person.fill"))
+        self.viewControllers = [eventsVC, mapVC, profileVC]
+        self.selectedIndex = 1
+        self.modalTransitionStyle = .coverVertical
+        self.modalPresentationStyle = .fullScreen
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

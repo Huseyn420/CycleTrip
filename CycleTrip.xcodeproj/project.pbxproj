@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		778F78DA265EF432004AB372 /* MapButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778F78D9265EF432004AB372 /* MapButtonsView.swift */; };
+		778F78DC265EF6B8004AB372 /* RouteCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778F78DB265EF6B8004AB372 /* RouteCreationView.swift */; };
+		778F78DE265F9B68004AB372 /* MapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778F78DD265F9B68004AB372 /* MapDelegate.swift */; };
 		779DF6C72484443E0018D8B3 /* EditUserInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6C62484443E0018D8B3 /* EditUserInfoPresenter.swift */; };
 		779DF6C9248444500018D8B3 /* EditUserPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6C8248444500018D8B3 /* EditUserPassword.swift */; };
 		779DF6CB2484445E0018D8B3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779DF6CA2484445C0018D8B3 /* SettingsCell.swift */; };
@@ -46,8 +49,7 @@
 		93050FD82481BB010083F8A0 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FB72481BB010083F8A0 /* CustomCell.swift */; };
 		93050FD92481BB010083F8A0 /* NavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FB82481BB010083F8A0 /* NavVC.swift */; };
 		93050FDA2481BB010083F8A0 /* MapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FBA2481BB010083F8A0 /* MapPresenter.swift */; };
-		93050FDB2481BB010083F8A0 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FBB2481BB010083F8A0 /* RoundButton.swift */; };
-		93050FDC2481BB010083F8A0 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FBC2481BB010083F8A0 /* MapVC.swift */; };
+		93050FDC2481BB010083F8A0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FBC2481BB010083F8A0 /* MapViewController.swift */; };
 		93050FDD2481BB010083F8A0 /* ChatVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FBE2481BB010083F8A0 /* ChatVCCell.swift */; };
 		93050FDE2481BB010083F8A0 /* ChatVCwithConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FBF2481BB010083F8A0 /* ChatVCwithConnection.swift */; };
 		93050FDF2481BB010083F8A0 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93050FC02481BB010083F8A0 /* ChatVC.swift */; };
@@ -57,6 +59,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		778F78D9265EF432004AB372 /* MapButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapButtonsView.swift; sourceTree = "<group>"; };
+		778F78DB265EF6B8004AB372 /* RouteCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCreationView.swift; sourceTree = "<group>"; };
+		778F78DD265F9B68004AB372 /* MapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDelegate.swift; sourceTree = "<group>"; };
 		779DF6C62484443E0018D8B3 /* EditUserInfoPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserInfoPresenter.swift; sourceTree = "<group>"; };
 		779DF6C8248444500018D8B3 /* EditUserPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserPassword.swift; sourceTree = "<group>"; };
 		779DF6CA2484445C0018D8B3 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -99,8 +104,7 @@
 		93050FB72481BB010083F8A0 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		93050FB82481BB010083F8A0 /* NavVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavVC.swift; sourceTree = "<group>"; };
 		93050FBA2481BB010083F8A0 /* MapPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
-		93050FBB2481BB010083F8A0 /* RoundButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
-		93050FBC2481BB010083F8A0 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapVC.swift; path = ../MapVC.swift; sourceTree = "<group>"; };
+		93050FBC2481BB010083F8A0 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = ../MapViewController.swift; sourceTree = "<group>"; };
 		93050FBE2481BB010083F8A0 /* ChatVCCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVCCell.swift; sourceTree = "<group>"; };
 		93050FBF2481BB010083F8A0 /* ChatVCwithConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVCwithConnection.swift; sourceTree = "<group>"; };
 		93050FC02481BB010083F8A0 /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -274,9 +278,11 @@
 		93050FB92481BB010083F8A0 /* Карта */ = {
 			isa = PBXGroup;
 			children = (
-				93050FBC2481BB010083F8A0 /* MapVC.swift */,
+				93050FBC2481BB010083F8A0 /* MapViewController.swift */,
+				778F78DB265EF6B8004AB372 /* RouteCreationView.swift */,
+				778F78DD265F9B68004AB372 /* MapDelegate.swift */,
 				93050FBA2481BB010083F8A0 /* MapPresenter.swift */,
-				93050FBB2481BB010083F8A0 /* RoundButton.swift */,
+				778F78D9265EF432004AB372 /* MapButtonsView.swift */,
 			);
 			path = "Карта";
 			sourceTree = "<group>";
@@ -426,13 +432,14 @@
 				93050F942481B61E0083F8A0 /* User.swift in Sources */,
 				93050F612481A9180083F8A0 /* CycleTrip.xcdatamodeld in Sources */,
 				93050FDD2481BB010083F8A0 /* ChatVCCell.swift in Sources */,
+				778F78DC265EF6B8004AB372 /* RouteCreationView.swift in Sources */,
 				8066030224846ED900D629A8 /* EventsVC.swift in Sources */,
 				779DF6CB2484445E0018D8B3 /* SettingsCell.swift in Sources */,
+				778F78DE265F9B68004AB372 /* MapDelegate.swift in Sources */,
 				93050FC92481BB010083F8A0 /* AnimatedView.swift in Sources */,
 				93050FD02481BB010083F8A0 /* CustomTextField.swift in Sources */,
-				93050FDB2481BB010083F8A0 /* RoundButton.swift in Sources */,
 				93050FD72481BB010083F8A0 /* TableVC.swift in Sources */,
-				93050FDC2481BB010083F8A0 /* MapVC.swift in Sources */,
+				93050FDC2481BB010083F8A0 /* MapViewController.swift in Sources */,
 				779DF6D324844DBE0018D8B3 /* UserInfoHeader.swift in Sources */,
 				779DF6CD248444680018D8B3 /* SettingsSection.swift in Sources */,
 				93050FC82481BB010083F8A0 /* RegistrationView.swift in Sources */,
@@ -458,6 +465,7 @@
 				779DF6D524844DC60018D8B3 /* ViewController.swift in Sources */,
 				93050FC62481BB010083F8A0 /* ForgotPasswordPresenter.swift in Sources */,
 				93050F4E2481A57D0083F8A0 /* SceneDelegate.swift in Sources */,
+				778F78DA265EF432004AB372 /* MapButtonsView.swift in Sources */,
 				93050F952481B61E0083F8A0 /* Event.swift in Sources */,
 				93050FCD2481BB010083F8A0 /* CustomButton.swift in Sources */,
 				93050FC32481BB010083F8A0 /* TabBar.swift in Sources */,
@@ -604,7 +612,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 294A4F2T2H;
 				INFOPLIST_FILE = CycleTrip/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -624,7 +632,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 294A4F2T2H;
 				INFOPLIST_FILE = CycleTrip/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

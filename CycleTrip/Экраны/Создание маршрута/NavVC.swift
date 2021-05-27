@@ -19,17 +19,16 @@ final class NavVC: UINavigationController {
         tableVC.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelTapped(sender:)))
         tableVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped(sender:)))
     }
+	
     @objc private func cancelTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+	
     @objc private func saveTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
         presenter.createEvent(name:tableVC.name, date:tableVC.date)
         tableVC.view.endEditing(true)
     }
-    
-    
-
     /*
     // MARK: - Navigation
 

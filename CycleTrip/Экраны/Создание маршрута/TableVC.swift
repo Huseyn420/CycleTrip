@@ -18,25 +18,23 @@ final class TableVC: UITableViewController {
             return "Название"
         }
     }
+    
     var date: Date = NSDate.now
     private let nameCell = CustomCell(iconName: "pencil")
     private let dateCell = CustomCell(iconName: "calendar")
     private let timeCell = CustomCell(iconName: "clock")
-    
     private let datePicker: UIDatePicker = {
         let dp = UIDatePicker()
         dp.datePickerMode = .date
         dp.minimumDate = NSDate.now
         return dp
     }()
-    
     private let timePicker: UIDatePicker = {
         let dp = UIDatePicker()
         dp.datePickerMode = .time
         dp.minimumDate = NSDate.now
         return dp
     }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureDone))
@@ -45,9 +43,7 @@ final class TableVC: UITableViewController {
         tableView.dataSource = self
         configureCells()
     }
-    
-    
-    
+
     @objc private func tapGestureDone() {
         view.endEditing(true)
         
@@ -97,6 +93,7 @@ final class TableVC: UITableViewController {
         }
         return cell
     }
+    
     private func configureCells() {
         nameCell.textField.placeholder = "Название"
         datePicker.addTarget(self, action: #selector(dateChanged(sender:)), for: .valueChanged)
@@ -104,11 +101,13 @@ final class TableVC: UITableViewController {
         dateCell.makeCell(picker: datePicker, format: "E, d MMM yyyy")
         timeCell.makeCell(picker: timePicker, format: "HH:mm")
     }
+    
     @objc private func dateChanged(sender: UIDatePicker) {
         let date = sender.date
         dateCell.textField.text = dateCell.formatter.string(from: date)
         self.date = date
     }
+    
     @objc private func timeChanged(sender: UIDatePicker) {
         let date = sender.date
         timeCell.textField.text = timeCell.formatter.string(from: date)

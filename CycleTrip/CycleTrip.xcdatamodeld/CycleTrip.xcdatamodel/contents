@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G1012" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
-        <attribute name="loggedIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-    </entity>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G8022" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="Person" positionX="-63" positionY="-18" width="128" height="58"/>
+        <element name="Person" positionX="-63" positionY="-18" width="128" height="43"/>
     </elements>
 </model>

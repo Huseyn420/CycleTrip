@@ -13,7 +13,7 @@ import MessageUI
 private let reuseIdentifier = "SettingsCell"
 private let imagePicker = UIImagePickerController()
 //@available(iOS 13.0, *)
-class ViewController: UIViewController {
+class ProfileViewController: UIViewController {
     
     
     var tableView: UITableView!
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
         present(composer, animated: true)
     }
 }
-extension ViewController: MFMailComposeViewControllerDelegate {
+extension ProfileViewController: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         
@@ -92,7 +92,7 @@ extension ViewController: MFMailComposeViewControllerDelegate {
     }
 }
 //@available(iOS 13.0, *)
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return SettingsSection.allCases.count
@@ -228,7 +228,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
 
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             userInfoHeader.profileImageView.image = image

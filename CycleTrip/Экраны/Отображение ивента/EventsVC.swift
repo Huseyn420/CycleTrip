@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 
-class EventsVC: UIViewController {
+class EventsViewController: UIViewController {
     var eventIDs: [String]!
     var events = [Event]()
     let tableView = UITableView()
@@ -82,7 +82,7 @@ class EventsVC: UIViewController {
     }
 
 //@available(iOS 13.0, *)
-extension EventsVC: UITableViewDelegate, UITableViewDataSource {
+extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

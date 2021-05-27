@@ -13,32 +13,37 @@ import MapboxDirections
 import Mapbox
 
 final class MapPresenter {
-    var mapView: MGLMapView!
-    var mapVC: MapVC!
+    let mapVC: MapViewController!
+    let mapView: MGLMapView!
+    var routeCreationView: RouteCreationView!
     var currentRoute: Route!
     var coordinates = [CLLocationCoordinate2D]()
     var newEventAnnotations = [MGLPointAnnotation]()
-    
     var userEvents: [String : Event]!
-
     var eventIDs: [String]!
     var userEventAnnotations = [MGLPointAnnotation]()
     
     let uid = Auth.auth().currentUser!.uid
     let ref = Database.database().reference()
-    
-
+	
     var routeLayer: MGLLineStyleLayer!
+    
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "E, d MMM yyyy"
         return df
     }()
+    
     private let timeFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "HH:mm"
         return df
     }()
+	
+	init(mapVC: MapViewController, mapView: MGLMapView) {
+		self.mapVC = mapVC
+		self.mapView = mapView
+	}
     
     func calculateRoute(coordinates: [CLLocationCoordinate2D],
                         completion: @escaping (Route?, Error?) -> ()) {
@@ -56,18 +61,14 @@ final class MapPresenter {
         
         // Generate the route object and draw it on the map
         Directions.shared.calculate(options) { [unowned self] (waypoints, routes, error) in
-            guard error == nil else { self.mapVC.makeCreateButtonActive(false); print(error!.localizedDescription); return}
+            guard error == nil else { self.routeCreationView.makeCreateButtonActive(false); print(error!.localizedDescription); return}
             self.currentRoute = routes?.first
             // Draw the route on the map after creating it
             self.drawRoute(route: self.currentRoute)
-            self.mapVC.numberOfPoints.text = "\(coordinates.count)/25"
+            self.routeCreationView.numberOfPoints.text = "\(coordinates.count)/25"
             let distance = self.currentRoute?.distance ?? 0
-            self.mapVC.distance.text = "\(Int(distance)/100*100) м"
+            self.routeCreationView.distance.text = "\(Int(distance)/100*100) м"
         }
-    }
-    init(mapVC: MapVC) {
-        self.mapVC = mapVC
-        mapView = mapVC.mapView
     }
 
     func addPoint(coordinate: CLLocationCoordinate2D) {
@@ -75,16 +76,16 @@ final class MapPresenter {
         annotation.coordinate = coordinate
         annotation.title = ""
         newEventAnnotations.append(annotation)
-        mapView.addAnnotation(annotation)
+        mapVC.mapView.addAnnotation(annotation)
         self.coordinates.append(coordinate)
         
         // Calculate the route from the user's location to the set destination
         let flag1 = !(coordinates.count > 0)
-        mapVC.hideCreateStuff(flag1)
+        routeCreationView.isHidden = false
         if routeLayer != nil {
             routeLayer.isVisible = flag1 }
         let flag2 = coordinates.count > 1
-        mapVC.makeCreateButtonActive(flag2)
+        routeCreationView.makeCreateButtonActive(flag2)
         if flag2 {
             calculateRoute(coordinates: self.coordinates) { (route, error) in
                 if error != nil {
@@ -93,8 +94,8 @@ final class MapPresenter {
             }
             
         }
-        else { mapVC.numberOfPoints.text = "1/25"
-            mapVC.distance.text = "0 м"
+        else { routeCreationView.numberOfPoints.text = "1/25"
+            routeCreationView.distance.text = "0 м"
         }
 
     }
@@ -105,12 +106,11 @@ final class MapPresenter {
         self.coordinates.removeLast()
         
         // Calculate the route from the user's location to the set destination
-        let flag1 = !(coordinates.count > 0)
-        mapVC.hideCreateStuff(flag1)
+        routeCreationView.isHidden = true
         if routeLayer != nil {
-            routeLayer.isVisible = flag1 }
+            routeLayer.isVisible = !(coordinates.count > 0) }
         let flag2 = coordinates.count > 1
-        mapVC.makeCreateButtonActive(flag2)
+        routeCreationView.makeCreateButtonActive(flag2)
         if flag2 {
             calculateRoute(coordinates: self.coordinates) { (route, error) in
                 if error != nil {
@@ -119,12 +119,10 @@ final class MapPresenter {
             }
             
         }
-        else { mapVC.numberOfPoints.text = "1/25"
-            mapVC.distance.text = "0 м"
+        else { routeCreationView.numberOfPoints.text = "1/25"
+            routeCreationView.distance.text = "0 м"
         }
     }
-
-
     
     func drawRoute(route: Route) {
         // Convert the route’s coordinates into a polyline
@@ -152,8 +150,6 @@ final class MapPresenter {
         }
     }
     
-    
-    
     func createEvent(name: String, date: Date) {
         let event = Event(name: name, date: date, points: coordinates, routeJSON: currentRoute.json!)
         guard let key = ref.child("events").childByAutoId().key else { return }
@@ -163,7 +159,7 @@ final class MapPresenter {
         ref.child("users/\(uid)/eventIDs").setValue(eventIDs)
         mapVC.showSuccessAlert()
         cleanCash()
-        mapVC.hideCreateStuff(true)
+        routeCreationView.isHidden = true
         createUserEventAnnotation(event: event)
         routeLayer.isVisible = false
     }
@@ -189,6 +185,7 @@ final class MapPresenter {
             self?.createUserEventAnnotations()
         })
     }
+    
     func showEventRoute(event: Event) {
         var points = [Waypoint]()
         points.append(Waypoint(coordinate: event.points[0], coordinateAccuracy: -1, name: "Start"))
@@ -221,12 +218,14 @@ final class MapPresenter {
         }
         mapView.addAnnotations(annotations)
     }
+    
     func cleanCash() {
         currentRoute = nil
         coordinates = []
         mapView.removeAnnotations(newEventAnnotations)
         newEventAnnotations = []
     }
+    
     func removeUserEvent(startPoint coordinates: CLLocationCoordinate2D) {
         for (id,event) in userEvents {
             if event.startPoint == coordinates {
